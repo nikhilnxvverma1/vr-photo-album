@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Tile : MonoBehaviour {
 
-	Floor floor;
-	Prop prop;
-	Ceiling ceiling;
+	public Floor floor;
+	public Prop prop;
+	public Ceiling ceiling;
 
 	// Use this for initialization
 	void Start () {
@@ -16,4 +16,10 @@ public class Tile : MonoBehaviour {
 	void Update () {
 	
 	}
+}
+
+enum TileLayer{
+	FloorMap,
+	PropMap,
+	CeilingMap
 }

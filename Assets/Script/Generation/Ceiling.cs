@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Ceiling : MonoBehaviour {
 
-	CeilingType type;
-	Direction direction;
+	public CeilingType type;
+	public Direction direction;
 
 	// Use this for initialization
 	void Start () {
@@ -15,9 +14,49 @@ public class Ceiling : MonoBehaviour {
 	void Update () {
 
 	}
+
+	public static Ceiling GetTile(string tileValue){
+		if(tileValue==null || tileValue.Trim().Length==0){
+			return null;
+		}
+		Ceiling ceiling=new Ceiling();
+		string[] typeAndAngle=tileValue.Split('-');
+		string typeString=typeAndAngle[0];		
+		switch(typeString){
+			case "Blank":
+				ceiling.type=CeilingType.Blank;
+				break;
+			case "Chandelier":
+				ceiling.type=CeilingType.Chandelier;
+				break;
+			case "Vent":
+				ceiling.type=CeilingType.Vent;
+				break;
+			case "Fan":
+				ceiling.type=CeilingType.Fan;
+				break;
+			case "FireAlarm":
+				ceiling.type=CeilingType.FireAlarm;
+				break;		
+			case "HangingBanner":
+				ceiling.type=CeilingType.HangingBanner;
+				break;		
+						
+			default:
+				Debug.Log("Invalid Ceiling type,setting blank : "+typeString);
+				ceiling.type=CeilingType.Blank;
+				break;
+		}
+
+		//convert the angle into direction
+		int angle=int.Parse(typeAndAngle[1]);
+		ceiling.direction=Tilemap.GetDirection(angle);
+		return ceiling;
+	}
 }
 
-enum CeilingType{
+public enum CeilingType{
+	Blank, 
 	Chandelier,
 	Vent,
 	Fan,

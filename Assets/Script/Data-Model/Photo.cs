@@ -4,8 +4,8 @@ using System.Collections;
 public class Photo : MonoBehaviour {
 
 	string name;
-	float width;
-	float height;
+	float width;//in pixels
+	float height;//in pixels
 	Album album;
 
 	// Use this for initialization
