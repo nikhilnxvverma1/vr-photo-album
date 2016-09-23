@@ -62,6 +62,10 @@ public class Tilemap : MonoBehaviour {
 						tileGrid[currentMapRow][j]=new Tile();
 					}
 
+					if(tileGrid[currentMapRow][j]==null){
+						tileGrid[currentMapRow][j]=new Tile();
+					}
+
 					switch(currentTileLayer){
 						case TileLayer.FloorMap:
 							tileGrid[currentMapRow][j].floor=Floor.GetTile(tiles[j]);

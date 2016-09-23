@@ -1,17 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class RootModel : MonoBehaviour {
+public class RootModel {
 
 	Album [] albumList;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

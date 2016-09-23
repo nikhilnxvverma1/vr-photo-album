@@ -1,19 +1,9 @@
 ﻿using UnityEngine;
 
-public class Prop : MonoBehaviour {
+public class Prop {
 
 	public PropType type;
 	public Direction direction;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public static Prop GetTile(string tileValue){
 		if(tileValue==null || tileValue.Trim().Length==0){

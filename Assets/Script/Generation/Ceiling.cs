@@ -1,19 +1,9 @@
 ﻿using UnityEngine;
 
-public class Ceiling : MonoBehaviour {
+public class Ceiling {
 
 	public CeilingType type;
 	public Direction direction;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	public static Ceiling GetTile(string tileValue){
 		if(tileValue==null || tileValue.Trim().Length==0){
