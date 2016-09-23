@@ -93,6 +93,21 @@ public class Tilemap : MonoBehaviour {
 				return Direction.North;
 		}
 	}
+
+	public static int AngleFor(Direction direction){
+		switch(direction){
+			case Direction.North:
+				return 0;
+			case Direction.East:
+				return 90;
+			case Direction.South:
+				return 180;
+			case Direction.West:
+				return 270;
+			default:
+				return -1;//indicates unknown,although its a valid angle, this is mostly useful while debugging
+		}
+	} 
 }
 
 public enum Direction{

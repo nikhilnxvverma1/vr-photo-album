@@ -49,6 +49,27 @@ public class Floor : MonoBehaviour {
 		floor.direction=Tilemap.GetDirection(angle);
 		return floor;
 	}
+
+	override public string ToString(){
+		return Floor.StringFor(type)+"-"+Tilemap.AngleFor(direction);
+	}
+
+	public static string StringFor(FloorType type){
+		switch(type){
+			case FloorType.Blank:
+				return "Blank";				
+			case FloorType.Wall:
+				return "Wall";
+			case FloorType.Corner:
+				return "Corner";
+			case FloorType.Door:
+				return "Door";
+			case FloorType.Window:
+				return "Window";		
+			default:
+				return "Unknown";
+		}
+	}
 }
 	
 public enum FloorType{

@@ -53,6 +53,30 @@ public class Ceiling : MonoBehaviour {
 		ceiling.direction=Tilemap.GetDirection(angle);
 		return ceiling;
 	}
+
+	public static string StringFor(CeilingType type){
+		switch(type){
+			case CeilingType.Blank:
+				return "Blank";				
+			case CeilingType.Chandelier:
+				return "Chandelier";
+			case CeilingType.Vent:
+				return "Vent";
+			case CeilingType.Fan:
+				return "Fan";
+			case CeilingType.FireAlarm:
+				return "FireAlarm";		
+			case CeilingType.HangingBanner:
+				return "HangingBanner";	
+			default:
+				return "Unknown";
+		}
+	}
+
+	override public string ToString(){
+		return Ceiling.StringFor(type)+"-"+Tilemap.AngleFor(direction);
+	}
+
 }
 
 public enum CeilingType{

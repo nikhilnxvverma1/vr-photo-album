@@ -48,6 +48,27 @@ public class Prop : MonoBehaviour {
 		prop.direction=Tilemap.GetDirection(angle);
 		return prop;
 	}
+
+	public static string StringFor(PropType type){
+		switch(type){
+			case PropType.Piano:
+				return "Piano";				
+			case PropType.Table:
+				return "Table";
+			case PropType.Chair:
+				return "Chair";
+			case PropType.FlowerPot:
+				return "FlowerPot";
+			case PropType.Stool:
+				return "Stool";		
+			default:
+				return "Unknown";
+		}
+	}
+
+	override public string ToString(){
+		return Prop.StringFor(type)+"-"+Tilemap.AngleFor(direction);
+	}
 }
 
 public enum PropType{
