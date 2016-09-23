@@ -9,12 +9,12 @@ public class Tilemap : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		ReadTileMapFile("tilemap.csv");
+		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 	private void ReadTileMapFile(string path){
@@ -57,6 +57,11 @@ public class Tilemap : MonoBehaviour {
 			}else{
 				//this means its a continuation of the currentTileLayer
 				for(int j=0;j<columns;j++){
+
+					if(tileGrid[currentMapRow][j]==null){
+						tileGrid[currentMapRow][j]=new Tile();
+					}
+
 					switch(currentTileLayer){
 						case TileLayer.FloorMap:
 							tileGrid[currentMapRow][j].floor=Floor.GetTile(tiles[j]);
