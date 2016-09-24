@@ -2,6 +2,7 @@
 
 public class Tilemap : MonoBehaviour {
 
+	const float TileLength=2;
 	int rows,columns;	
 
 	Tile [][] tileGrid;
@@ -9,12 +10,34 @@ public class Tilemap : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");
+		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
+		BuildFromTilemap();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	private void BuildFromTilemap(){
+		string containerPath="Tilemap/";//we might also have several themes which can be put in seperate folders
+		for(int i=0;i<rows;i++){
+			for(int j=0;j<columns;j++){
+				Tile tile=tileGrid[i][j];
+				//load Floor prefab
+				string floorPath=containerPath+"Floor/"+Floor.StringFor(tile.floor.type);
+				GameObject floorObject=Instantiate(Resources.Load(floorPath,typeof(GameObject))) as GameObject;
+				floorObject.transform.position=new Vector3(j*TileLength,0,i*TileLength);
+				floorObject.transform.Rotate(0,AngleFor(tile.floor.direction),0,Space.Self);
+
+				//load Ceiling prefab
+				string ceilingPath=containerPath+"Ceiling/"+Ceiling.StringFor(tile.ceiling.type);
+				GameObject ceilingObject=Instantiate(Resources.Load(ceilingPath,typeof(GameObject))) as GameObject;
+				ceilingObject.transform.position=new Vector3(i*TileLength,0,j*TileLength);
+				ceilingObject.transform.Rotate(0,AngleFor(tile.floor.direction),0);
+				
+			}
+		}		
 	}
 
 	private void ReadTileMapFile(string path){
