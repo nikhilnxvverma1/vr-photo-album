@@ -2,8 +2,8 @@
 
 public class Album {
 
-	string name;
-	string path;
-	Photo [] photoList;
+	public string name;
+	public string path;
+	public Photo [] photoList;
 
 }

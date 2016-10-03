@@ -2,9 +2,9 @@
 
 public class Photo	{ 
 
-	string name;
-	float width;//in pixels
-	float height;//in pixels
+	public string name;
+	public float width;//in pixels
+	public float height;//in pixels
 	Album album;
 
 }

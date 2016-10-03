@@ -2,6 +2,6 @@
 
 public class RootModel {
 
-	Album [] albumList;
+	public Album [] albumList;
 
 }
