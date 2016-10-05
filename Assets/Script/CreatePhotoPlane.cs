@@ -6,7 +6,7 @@ public class CreatePhotoPlane : MonoBehaviour {
 	// Use this for initialization
 	public float planex, planey, planez, planescale;
 	void Start () {
-		byte[] image = System.IO.File.ReadAllBytes(System.IO.Directory.GetCurrentDirectory() + @"\Assets\Starsinthesky.jpg");
+		byte[] image = System.IO.File.ReadAllBytes(System.IO.Directory.GetCurrentDirectory() + @"/Assets/Starsinthesky.jpg");
 		Texture2D t2 = new Texture2D(3877, 2842);
 		t2.LoadImage(image);
 		planex = 0; planey = 0; planez = 0; planescale = 5;

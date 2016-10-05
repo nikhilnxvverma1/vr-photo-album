@@ -21,19 +21,21 @@ public class Tilemap : MonoBehaviour {
 
 	private void BuildFromTilemap(){
 		string containerPath="Tilemap/";//we might also have several themes which can be put in seperate folders
+		float startX=-20;
+		float startY=-20;
 		for(int i=0;i<rows;i++){
 			for(int j=0;j<columns;j++){
 				Tile tile=tileGrid[i][j];
 				//load Floor prefab
 				string floorPath=containerPath+"Floor/"+Floor.StringFor(tile.floor.type);
 				GameObject floorObject=Instantiate(Resources.Load(floorPath,typeof(GameObject))) as GameObject;
-				floorObject.transform.position=new Vector3(j*TileLength,0,i*TileLength);
+				floorObject.transform.position=new Vector3(startX+j*TileLength,0,startY+i*TileLength);
 				floorObject.transform.Rotate(0,AngleFor(tile.floor.direction),0,Space.Self);
 
 				//load Ceiling prefab
 				string ceilingPath=containerPath+"Ceiling/"+Ceiling.StringFor(tile.ceiling.type);
 				GameObject ceilingObject=Instantiate(Resources.Load(ceilingPath,typeof(GameObject))) as GameObject;
-				ceilingObject.transform.position=new Vector3(i*TileLength,0,j*TileLength);
+				ceilingObject.transform.position=new Vector3(startX+i*TileLength,0,startY+j*TileLength);
 				ceilingObject.transform.Rotate(0,AngleFor(tile.floor.direction),0);
 				
 			}
