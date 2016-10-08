@@ -4,13 +4,23 @@ using System.IO;
 
 public class DataScan : MonoBehaviour {
 
-	public string rootFolder = "/Users/arjundhuliya/Documents";
+	private string rootFolder = "Assets/Images/";
 	public RootModel rModel;
 
 	// Use this for initialization
 	void Start () {
 		rModel = new RootModel ();
 		buildRootModel ();
+		printrModel ();
+	}
+	private void printrModel(){
+		for (int i = 0; i < rModel.albumList.Length; i++) {
+			Debug.Log ("Folder "+rModel.albumList[i].name+" has:"	);
+			for (int j = 0; j < rModel.albumList[i].photoList.Length; j++) {
+				Debug.Log (rModel.albumList [i].photoList [j].name);
+//				Debug.Log (	rModel.albumList[i].photoList[j].texture.ToString());
+			}
+		}
 	}
 	private void buildRootModel (){
 		DirectoryInfo dir = new DirectoryInfo(rootFolder);
@@ -26,16 +36,17 @@ public class DataScan : MonoBehaviour {
 			rModel.albumList[i+1].path = dirs[i].FullName;
 			rModel.albumList[i+1].name = dirs[i].Name;
 			loadtoAlbum (rModel.albumList[i+1], dirs[i]);
-			Debug.Log (rModel.albumList [i].name);
+//			Debug.Log (rModel.albumList [i].name);
 		}
 	}
 
-	private static Texture2D LoadPNG(string filePath) {
+	private static Texture2D LoadPNG(string filePath, Photo p) {
 
 		Texture2D tex = new Texture2D(2,2);
 		byte[] fileData;
 		if (File.Exists (filePath)) {
 			fileData = File.ReadAllBytes (filePath);
+			p.byteArray = fileData;
 			tex.LoadImage (fileData);
 			//			Debug.Log ("loaded files");
 		} else {
@@ -50,10 +61,11 @@ public class DataScan : MonoBehaviour {
 		for (int i = 0; i < info.Length; i++) {
 			album.photoList [i] = new Photo ();
 			album.photoList [i].name = info [i].Name;
-			Debug.Log ("In "+album.name+" Found :"+info [i].Name);
-			Texture2D t = LoadPNG(info[i].FullName);
+//			Debug.Log ("In "+album.name+" Found :"+info [i].Name);
+			Texture2D t = LoadPNG(info[i].FullName, album.photoList[i]);
 			album.photoList [i].width = t.width;
 			album.photoList [i].height = t.height;
+			album.photoList [i].texture = t;
 		}
 	}
 	// Update is called once per frame
