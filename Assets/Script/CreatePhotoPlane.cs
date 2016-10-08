@@ -6,13 +6,17 @@ public class CreatePhotoPlane : MonoBehaviour {
 	// Use this for initialization
 	public float planescale;
 	void Start () {
-		var slash = System.IO.Path.DirectorySeparatorChar;
-		byte[] image = System.IO.File.ReadAllBytes(System.IO.Directory.GetCurrentDirectory() + string.Format(@"{0}Assets{1}Starsinthesky.jpg",slash,slash));
-		Texture2D t2 = new Texture2D(3877, 2842);
-		t2.LoadImage(image);
+		//var slash = System.IO.Path.DirectorySeparatorChar;
+		//byte[] image = System.IO.File.ReadAllBytes(System.IO.Directory.GetCurrentDirectory() + string.Format(@"{0}Assets{1}Starsinthesky.jpg",slash,slash));
+		//Texture2D t2 = new Texture2D(3877, 2842);
+		//t2.LoadImage(image);
+		var ds = this.GetComponentInParent<DataScan>();
+		var albums = ds.rModel.albumList;
+		var curAlbum = albums[1];
+		var photoList = ShufflePhotos(curAlbum.photoList);
 		List<GameObject> photos = new List<GameObject>();
 		System.Random r = new System.Random();
-		for (int i = 0; i < 10; i++)
+		foreach (Photo p in photoList)
 		{
 			GameObject photo = GameObject.CreatePrimitive(PrimitiveType.Quad);
 			photo.transform.parent = this.transform;
@@ -22,7 +26,7 @@ public class CreatePhotoPlane : MonoBehaviour {
 			photo.transform.eulerAngles = new Vector3(-90, 0, 0);
 
 			Material mat = new Material(Shader.Find("Unlit/Texture"));
-			mat.SetTexture("_MainTex", t2);
+			mat.SetTexture("_MainTex", p.texture);
 			Renderer rend = photo.GetComponent<Renderer>();
 			rend.material = mat;
 			photos.Add(photo);
@@ -30,6 +34,21 @@ public class CreatePhotoPlane : MonoBehaviour {
 		
 	}
 	
+	public Photo[] ShufflePhotos(Photo[] list)
+	{
+		System.Random rng = new System.Random();
+		int n = list.Length;
+		while(n > 1)
+		{
+			n--;
+			int k = rng.Next(n + 1);
+			Photo t = list[k];
+			list[k] = list[n];
+			list[n] = t;
+		}
+		return list;
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

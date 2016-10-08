@@ -5,6 +5,7 @@ public class CreatePlanes : MonoBehaviour {
 
 	// Use this for initialization
 	public float numPlanes, initialHeight, separation, planescale;
+	public bool hasMovement;
 	private List<GameObject> planes;
 	void Start () {
 		planes = new List<GameObject>();
@@ -23,13 +24,16 @@ public class CreatePlanes : MonoBehaviour {
 	void Update () {
 		foreach (GameObject p in planes)
 		{
-			
-			if(p.transform.position.y-1 <= initialHeight)
+			if (hasMovement)
 			{
-				p.transform.Translate(0, numPlanes*separation-1, 0);
-			}else
-			{
-				p.transform.Translate(0, -1*Time.deltaTime/2, 0);
+				if (p.transform.position.y - 1 <= initialHeight)
+				{
+					p.transform.Translate(0, numPlanes * separation - 1, 0);
+				}
+				else
+				{
+					p.transform.Translate(0, -1 * Time.deltaTime / 2, 0);
+				}
 			}
 		}
 	}
