@@ -4,7 +4,7 @@ using System.IO;
 
 public class DataScan : MonoBehaviour {
 
-	private string rootFolder = "Assets/Images/";
+	private string rootFolder = "Assets/Images/Data Images";
 	public RootModel rModel;
 
 	// Use this for initialization
