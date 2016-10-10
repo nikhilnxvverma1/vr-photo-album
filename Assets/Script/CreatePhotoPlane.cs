@@ -20,6 +20,7 @@ public class CreatePhotoPlane : MonoBehaviour {
 		{
 			GameObject photo = GameObject.CreatePrimitive(PrimitiveType.Quad);
 			photo.transform.parent = this.transform;
+			photo.transform.localScale = new Vector3(p.width / p.height, 1, p.height / p.width);
 			float px = (float)r.NextDouble() * planescale*planescale - planescale*planescale/2;
 			float pz = (float)r.NextDouble() * planescale*planescale - planescale*planescale/2;
 			photo.transform.localPosition = new Vector3(px, 0, pz);
