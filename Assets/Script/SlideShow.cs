@@ -6,7 +6,7 @@ using System.IO;
 public class SlideShow : MonoBehaviour {
 
 	public Album album;
-	private Texture2D[] slides = new Texture2D[10];
+	private Texture2D[] slides;
 	public GameObject imageObj;
 	private float changeTime = 3.0f;
 	private int currentSlide = 0;
@@ -16,35 +16,25 @@ public class SlideShow : MonoBehaviour {
 
 	void Start()
 	{
-//		imageObj = GetComponent<Image>();
 		DataScan ds = GetComponent<DataScan>();
-		//var ds = this.GetComponentInParent<DataScan>();
-//		if (ds != null) {
-			var albums = ds.rModel.albumList;
-			album = albums [1];
-//			ds.printrModel ();
-			currentSlide++;
-//			width = (int)imageObj.rectTransform.rect.width;//TODO
-		//			height = (int)imageObj.rectTransform.rect.height;//TODO
-			LoadTextures ();
-			Sprite sprite = Sprite.Create (slides [currentSlide], new Rect (0, 0, width, height), new Vector2 (0.5f, 0.0f), 1.0f);
-//			imageObj.sprite = sprite;//TODO
+		var albums = DataScan.rootModel.albumList;
+		album = albums [1];
+		currentSlide++;
+		LoadTextures ();
+		Sprite sprite = Sprite.Create (slides [currentSlide], new Rect (0, 0, width, height), new Vector2 (0.5f, 0.0f), 1.0f);
 		GetComponent<SpriteRenderer>().sprite = sprite;
-
-			currentSlide = currentSlide + 1 % slides.Length;
-			timeSinceLastUpdate = 0.0f;
-//		}
+		currentSlide = currentSlide + 1 % slides.Length;
+		timeSinceLastUpdate = 0.0f;
 	}
 
 	private void LoadTextures(){
-		for (int i = 0; i < 10 && i < album.photoList.Length; i++) {
+		slides = new Texture2D[album.photoList.Length];
+		for (int i = 0; i < album.photoList.Length; i++) {
 			slides [i] = LoadPNG (album.path + "/"+album.photoList[i].name, width, height);
-//			slides[i] = album.photoList[i].texture;
 		}
 	}
 
 	public static Texture2D LoadPNG(string filePath, int width, int height) {
-
 		Texture2D tex = new Texture2D(2,2);
 		byte[] fileData;
 		if (File.Exists (filePath)) {
@@ -75,21 +65,10 @@ public class SlideShow : MonoBehaviour {
 	void Update()
 	{
 		if(timeSinceLastUpdate > changeTime &&  currentSlide < slides.Length)
-		{
-			// below 6 lines can be used to test the code on dummy data, else comment our
-//			if(currentSlide%2==0)
-//				slides[currentSlide] = LoadPNG("/Users/arjundhuliya/Documents/vr-photo-album/Assets/Images/GreatBall.png",
-//					width,height);
-//			else
-//				slides[currentSlide] = LoadPNG("/Users/arjundhuliya/Documents/vr-photo-album/Assets/Images/yoshi.png",
-//					width,height);	
-
-
+		{	
 			Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
-//			imageObj.sprite = sprite;//TODO
 			GetComponent<SpriteRenderer>().sprite = sprite;
-		
-			currentSlide = currentSlide+1 % slides.Length;
+			currentSlide = (currentSlide+1) % slides.Length;
 			timeSinceLastUpdate = 0.0f;
 		}
 		timeSinceLastUpdate += Time.deltaTime;

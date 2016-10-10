@@ -5,38 +5,39 @@ using System.IO;
 public class DataScan : MonoBehaviour {
 
 	private string rootFolder = "Assets/Images/Data Images";
-	public RootModel rModel;
+	public static RootModel rootModel;
+	public static Album currentAlbum;
 
 	// Use this for initialization
 	void Start () {
-		rModel = new RootModel ();
+		rootModel = new RootModel ();
 		buildRootModel ();
-//		printrModel ();
+//		printrootModel ();
 	}
-	public void printrModel(){
-		for (int i = 0; i < rModel.albumList.Length; i++) {
-			Debug.Log ("Folder "+rModel.albumList[i].name+" has:"	);
-			for (int j = 0; j < rModel.albumList[i].photoList.Length; j++) {
-				Debug.Log (rModel.albumList [i].photoList [j].name);
-//				Debug.Log (	rModel.albumList[i].photoList[j].texture.ToString());
+	public void printRootModel(){
+		for (int i = 0; i < rootModel.albumList.Length; i++) {
+			Debug.Log ("Folder "+rootModel.albumList[i].name+" has:"	);
+			for (int j = 0; j < rootModel.albumList[i].photoList.Length; j++) {
+				Debug.Log (rootModel.albumList [i].photoList [j].name);
+//				Debug.Log (	rootModel.albumList[i].photoList[j].texture.ToString());
 			}
 		}
 	}
 	private void buildRootModel (){
 		DirectoryInfo dir = new DirectoryInfo(rootFolder);
 		DirectoryInfo[] dirs =  dir.GetDirectories ();
-		rModel.albumList = new Album[dirs.Length+1];
-		rModel.albumList[0] = new Album ();
-		rModel.albumList[0].path = rootFolder;
-		rModel.albumList[0].name = "Root";
-		loadtoAlbum (rModel.albumList[0], dir);
+		rootModel.albumList = new Album[dirs.Length+1];
+		rootModel.albumList[0] = new Album ();
+		rootModel.albumList[0].path = rootFolder;
+		rootModel.albumList[0].name = "Root";
+		loadtoAlbum (rootModel.albumList[0], dir);
 
 		for (int i = 0; i < dirs.Length; i++) {
-			rModel.albumList[i+1] = new Album ();
-			rModel.albumList[i+1].path = dirs[i].FullName;
-			rModel.albumList[i+1].name = dirs[i].Name;
-			loadtoAlbum (rModel.albumList[i+1], dirs[i]);
-//			Debug.Log (rModel.albumList [i].name);
+			rootModel.albumList[i+1] = new Album ();
+			rootModel.albumList[i+1].path = dirs[i].FullName;
+			rootModel.albumList[i+1].name = dirs[i].Name;
+			loadtoAlbum (rootModel.albumList[i+1], dirs[i]);
+//			Debug.Log (rootModel.albumList [i].name);
 		}
 	}
 
