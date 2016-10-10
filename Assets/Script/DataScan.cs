@@ -11,9 +11,9 @@ public class DataScan : MonoBehaviour {
 	void Start () {
 		rModel = new RootModel ();
 		buildRootModel ();
-		printrModel ();
+//		printrModel ();
 	}
-	private void printrModel(){
+	public void printrModel(){
 		for (int i = 0; i < rModel.albumList.Length; i++) {
 			Debug.Log ("Folder "+rModel.albumList[i].name+" has:"	);
 			for (int j = 0; j < rModel.albumList[i].photoList.Length; j++) {

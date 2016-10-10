@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
-public class SlideShow : ScriptableObject {
+public class SlideShow : MonoBehaviour {
 
 	public Album album;
 	private Texture2D[] slides = new Texture2D[10];
@@ -17,19 +17,27 @@ public class SlideShow : ScriptableObject {
 	void Start()
 	{
 //		imageObj = GetComponent<Image>();
-		currentSlide++;
-		width = (int)imageObj.rectTransform.rect.width;
-		height = (int)imageObj.rectTransform.rect.height;
-//		LoadTextures ();
-		Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
-		imageObj.sprite = sprite;
-		currentSlide = currentSlide+1 % slides.Length;
-		timeSinceLastUpdate = 0.0f;
+		DataScan ds = GetComponent<DataScan>();
+		//var ds = this.GetComponentInParent<DataScan>();
+//		if (ds != null) {
+			var albums = ds.rModel.albumList;
+			album = albums [1];
+//			ds.printrModel ();
+			currentSlide++;
+			width = (int)imageObj.rectTransform.rect.width;
+			height = (int)imageObj.rectTransform.rect.height;
+			LoadTextures ();
+			Sprite sprite = Sprite.Create (slides [currentSlide], new Rect (0, 0, width, height), new Vector2 (0.5f, 0.0f), 1.0f);
+			imageObj.sprite = sprite;
+			currentSlide = currentSlide + 1 % slides.Length;
+			timeSinceLastUpdate = 0.0f;
+//		}
 	}
 
 	private void LoadTextures(){
 		for (int i = 0; i < 10 && i < album.photoList.Length; i++) {
-			slides [i] = LoadPNG (album.path + "\"+album.photoList[i].name", width, height);
+			slides [i] = LoadPNG (album.path + "/"+album.photoList[i].name, width, height);
+//			slides[i] = album.photoList[i].texture;
 		}
 	}
 
@@ -41,9 +49,9 @@ public class SlideShow : ScriptableObject {
 			fileData = File.ReadAllBytes (filePath);
 			tex.LoadImage (fileData);
 			tex = ScaleTexture(tex,width,height);
-//			Debug.Log ("loaded files");
+			Debug.Log ("loaded files");
 		} else {
-//			Debug.Log ("Did not load files: "+filePath);
+			Debug.Log ("Did not load files: "+filePath);
 		}
 		return tex;
 	}
@@ -67,12 +75,12 @@ public class SlideShow : ScriptableObject {
 		if(timeSinceLastUpdate > changeTime &&  currentSlide < slides.Length)
 		{
 			// below 6 lines can be used to test the code on dummy data, else comment our
-			if(currentSlide%2==0)
-				slides[currentSlide] = LoadPNG("/Users/arjundhuliya/Documents/vr-photo-album/Assets/Images/GreatBall.png",
-					width,height);
-			else
-				slides[currentSlide] = LoadPNG("/Users/arjundhuliya/Documents/vr-photo-album/Assets/Images/yoshi.png",
-					width,height);	
+//			if(currentSlide%2==0)
+//				slides[currentSlide] = LoadPNG("/Users/arjundhuliya/Documents/vr-photo-album/Assets/Images/GreatBall.png",
+//					width,height);
+//			else
+//				slides[currentSlide] = LoadPNG("/Users/arjundhuliya/Documents/vr-photo-album/Assets/Images/yoshi.png",
+//					width,height);	
 
 
 			Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
