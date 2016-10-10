@@ -7,23 +7,25 @@ public class SlideShow : MonoBehaviour {
 
 	public Album album;
 	private Texture2D[] slides;
-	public GameObject imageObj;
+//	public GameObject imageObj;
 	private float changeTime = 3.0f;
 	private int currentSlide = 0;
 	private float timeSinceLastUpdate;
 	private int width = 320;
 	private int height = 240;
+	public int index;
 
 	void Start()
 	{
-		DataScan ds = GetComponent<DataScan>();
-		var albums = DataScan.rootModel.albumList;
-		album = albums [1];
+//		DataScan ds = GetComponent<DataScan>();
+//		var albums = DataScan.rootModel.albumList;
+		album = DataScan.rootModel.albumList[index];
 		currentSlide++;
 		LoadTextures ();
 		Sprite sprite = Sprite.Create (slides [currentSlide], new Rect (0, 0, width, height), new Vector2 (0.5f, 0.0f), 1.0f);
 		GetComponent<SpriteRenderer>().sprite = sprite;
 		currentSlide = currentSlide + 1 % slides.Length;
+
 		timeSinceLastUpdate = 0.0f;
 	}
 
