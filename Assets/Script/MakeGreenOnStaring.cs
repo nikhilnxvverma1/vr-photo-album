@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Select : MonoBehaviour {
+public class MakeGreenOnStaring : MonoBehaviour {
 
 	public GameObject hoeveredObeject;
 	public GameObject door;
@@ -12,8 +12,9 @@ public class Select : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		RaycastHit hitInfo;
 
 		if (Physics.Raycast(ray, out hitInfo))
@@ -41,15 +42,15 @@ public class Select : MonoBehaviour {
 		}
 		hoeveredObeject = obj;
 		Renderer[] rs = hoeveredObeject.GetComponentsInChildren<Renderer>();
-		if (hoeveredObeject == door)
-		{
+		//if (hoeveredObeject == door)
+		//{
 			foreach (Renderer r in rs)
 			{
 				Material m = r.material;
 				m.color = Color.green;
 				r.material = m;
 			}
-		}
+		//}
 
 
 

@@ -1,56 +1,79 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExitDoor : MonoBehaviour {
-	public  GameObject selectedObject;
+public class Select : MonoBehaviour {
+
+	public GameObject hoeveredObeject;
 	public GameObject door;
 	public int timeRemaining = 2;
-
-	void Start(){		
-		door = GameObject.FindWithTag ("exitdoor");	
+	// Use this for initialization
+	void Start () {
+		door = GameObject.FindWithTag("exitdoor");
 	}
-	void update(){
-		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		Debug.Log ("checking for object collision");
+
+	// Update is called once per frame
+	void Update () {
+
+		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 		RaycastHit hitInfo;
-		if (Physics.Raycast (ray, out hitInfo)) {
 
+		if (Physics.Raycast(ray, out hitInfo))
+		{
 			GameObject hitObject = hitInfo.transform.root.gameObject;
-			Debug.Log ("Hitting a game object " + hitObject.name);
 
-			SelectObject (hitObject);
+			Debug.Log("Mouse is over" + hitInfo.collider.name);
+
+			SelectObject(hitObject);
+
 		}
-		else{
-			ClearSelection ();
+		else {
+			ClearSelection();
 		}
+
+
 	}
-
-	void SelectObject(GameObject obj){
-		if (selectedObject != null) {
-			if (obj == selectedObject)
+	void SelectObject(GameObject obj)
+	{
+		if (hoeveredObeject != null)
+		{
+			if(obj == hoeveredObeject)
 				return;
-			ClearSelection ();
+			ClearSelection();
 		}
-		selectedObject = obj;
-		Renderer[] rs = selectedObject.GetComponentsInChildren<Renderer> ();
-		foreach (Renderer r in rs) {
+		hoeveredObeject = obj;
+		Renderer[] rs = hoeveredObeject.GetComponentsInChildren<Renderer>();
+		if (hoeveredObeject == door)
+		{
+		foreach (Renderer r in rs)
+		{
 			Material m = r.material;
 			m.color = Color.green;
 			r.material = m;
 		}
-		if (selectedObject == door) {
-			countDown ();
 		}
+
+
+
+
 	}
-	void ClearSelection(){
-		selectedObject = null;
-		Renderer[] rs = selectedObject.GetComponentsInChildren<Renderer> ();
-		foreach (Renderer r in rs) {
+	void ClearSelection()
+	{
+		if (hoeveredObeject == null)
+			return;
+
+		Renderer[] rs = hoeveredObeject.GetComponentsInChildren<Renderer>();
+		foreach (Renderer r in rs)
+		{
 			Material m = r.material;
 			m.color = Color.white;
 			r.material = m;
 		}
+		hoeveredObeject = null;
 	}
+
+
+
 
 	void countDown(){
 		timeRemaining--;
@@ -63,7 +86,7 @@ public class ExitDoor : MonoBehaviour {
 	}
 	public void ChangeScene(string sceneName){
 		Debug.Log ("change scene");
-		//		Application.LoadLevel (sceneName);
+				Application.LoadLevel (sceneName);
 	}
 
 	public void Mouseover(){
