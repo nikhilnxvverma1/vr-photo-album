@@ -12,7 +12,7 @@ public class DataScan : MonoBehaviour {
 	void Start () {
 		rootModel = new RootModel ();
 		buildRootModel ();
-		currentAlbum = rootModel.album [1];
+		currentAlbum = rootModel.albumList [1];
 //		printRootModel ();
 	}
 	public void printRootModel(){
