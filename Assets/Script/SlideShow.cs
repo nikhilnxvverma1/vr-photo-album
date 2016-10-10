@@ -7,12 +7,12 @@ public class SlideShow : MonoBehaviour {
 
 	public Album album;
 	private Texture2D[] slides = new Texture2D[10];
-	public Image imageObj;
+	public GameObject imageObj;
 	private float changeTime = 3.0f;
 	private int currentSlide = 0;
 	private float timeSinceLastUpdate;
-	private int width;
-	private int height;
+	private int width = 320;
+	private int height = 240;
 
 	void Start()
 	{
@@ -24,11 +24,13 @@ public class SlideShow : MonoBehaviour {
 			album = albums [1];
 //			ds.printrModel ();
 			currentSlide++;
-			width = (int)imageObj.rectTransform.rect.width;
-			height = (int)imageObj.rectTransform.rect.height;
+//			width = (int)imageObj.rectTransform.rect.width;//TODO
+		//			height = (int)imageObj.rectTransform.rect.height;//TODO
 			LoadTextures ();
 			Sprite sprite = Sprite.Create (slides [currentSlide], new Rect (0, 0, width, height), new Vector2 (0.5f, 0.0f), 1.0f);
-			imageObj.sprite = sprite;
+//			imageObj.sprite = sprite;//TODO
+		GetComponent<SpriteRenderer>().sprite = sprite;
+
 			currentSlide = currentSlide + 1 % slides.Length;
 			timeSinceLastUpdate = 0.0f;
 //		}
@@ -84,7 +86,9 @@ public class SlideShow : MonoBehaviour {
 
 
 			Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
-			imageObj.sprite = sprite;
+//			imageObj.sprite = sprite;//TODO
+			GetComponent<SpriteRenderer>().sprite = sprite;
+		
 			currentSlide = currentSlide+1 % slides.Length;
 			timeSinceLastUpdate = 0.0f;
 		}
