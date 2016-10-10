@@ -12,14 +12,14 @@ public class DataScan : MonoBehaviour {
 	void Start () {
 		rootModel = new RootModel ();
 		buildRootModel ();
-//		printrootModel ();
+		currentAlbum = rootModel.album [1];
+//		printRootModel ();
 	}
 	public void printRootModel(){
 		for (int i = 0; i < rootModel.albumList.Length; i++) {
 			Debug.Log ("Folder "+rootModel.albumList[i].name+" has:"	);
 			for (int j = 0; j < rootModel.albumList[i].photoList.Length; j++) {
 				Debug.Log (rootModel.albumList [i].photoList [j].name);
-//				Debug.Log (	rootModel.albumList[i].photoList[j].texture.ToString());
 			}
 		}
 	}
