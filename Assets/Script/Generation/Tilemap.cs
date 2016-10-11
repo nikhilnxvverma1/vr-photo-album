@@ -21,8 +21,17 @@ public class Tilemap : MonoBehaviour {
 
 	private void BuildFromTilemap(){
 		string containerPath="Tilemap/";//we might also have several themes which can be put in seperate folders
+
 		float startX=-20;
 		float startY=-20;
+		//insert the art gallery entry (which contains the player)
+		//the art gallery is a 3 X 4 tile prefab which should be placed before the
+		//generated art gallery
+		string entryPath=containerPath+"ArtGalleryEntry";
+		GameObject entryObject=Instantiate(Resources.Load(entryPath,typeof(GameObject))) as GameObject;
+		entryObject.transform.position=new Vector3(startX-1.5f*TileLength,startY-4*TileLength,0);
+		entryObject.transform.Rotate(0,0,0,Space.Self);
+
 		for(int i=0;i<rows;i++){
 			for(int j=0;j<columns;j++){
 				Tile tile=tileGrid[i][j];
