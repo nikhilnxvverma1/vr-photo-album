@@ -13,8 +13,7 @@ public class CreatePhotoPlane : MonoBehaviour {
 		//t2.LoadImage(image);
 
 		var albums = DataScan.rootModel.albumList;
-		//var curAlbum = DataScan.currentAlbum;
-		var curAlbum = albums[1];
+		var curAlbum = DataScan.currentAlbum;
 		var photoList = ShufflePhotos(curAlbum.photoList);
 		List<GameObject> photos = new List<GameObject>();
 		foreach (Photo p in photoList)
