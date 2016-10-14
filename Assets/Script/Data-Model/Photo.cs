@@ -7,6 +7,5 @@ public class Photo	{
 	public float height;//in pixels
 	public byte[] byteArray;
 	public Texture2D texture;
-	Album album;
-
+	public string description;
 }

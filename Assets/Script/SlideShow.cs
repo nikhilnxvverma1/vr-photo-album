@@ -6,8 +6,7 @@ using System.IO;
 public class SlideShow : MonoBehaviour {
 
 	public Album album;
-	private Texture2D[] slides;
-//	public GameObject imageObj;
+	private Sprite[] slides;
 	private float changeTime = 3.0f;
 	private int currentSlide = 0;
 	private float timeSinceLastUpdate;
@@ -17,38 +16,44 @@ public class SlideShow : MonoBehaviour {
 
 	void Start()
 	{
-//		DataScan ds = GetComponent<DataScan>();
-//		var albums = DataScan.rootModel.albumList;
 		album = DataScan.rootModel.albumList[index];
-		currentSlide++;
-		LoadTextures ();
-		Sprite sprite = Sprite.Create (slides [currentSlide], new Rect (0, 0, width, height), new Vector2 (0.5f, 0.0f), 1.0f);
+		LoadSprites ();
+		Sprite sprite = slides [currentSlide];
 		GetComponent<SpriteRenderer>().sprite = sprite;
 		currentSlide = currentSlide + 1 % slides.Length;
-
 		timeSinceLastUpdate = 0.0f;
 	}
 
-	private void LoadTextures(){
-		slides = new Texture2D[album.photoList.Length];
+	private void LoadSprites(){
+		slides = new Sprite[album.photoList.Length];
 		for (int i = 0; i < album.photoList.Length; i++) {
-			slides [i] = LoadPNG (album.path + "/"+album.photoList[i].name, width, height);
+			var tex = ScaleTexture (album.photoList [i].texture, width, height);
+			slides [i] = Sprite.Create (tex, new Rect (0, 0, width, height), 
+															new Vector2 (0.5f, 0.0f), 1.0f);
 		}
 	}
 
-	public static Texture2D LoadPNG(string filePath, int width, int height) {
-		Texture2D tex = new Texture2D(2,2);
-		byte[] fileData;
-		if (File.Exists (filePath)) {
-			fileData = File.ReadAllBytes (filePath);
-			tex.LoadImage (fileData);
-			tex = ScaleTexture(tex,width,height);
-			Debug.Log ("loaded files");
-		} else {
-			Debug.Log ("Did not load files: "+filePath);
-		}
-		return tex;
-	}
+
+//	private void LoadTextures(){
+//		slides = new Texture2D[album.photoList.Length];
+//		for (int i = 0; i < album.photoList.Length; i++) {
+//			var tex = LoadPNG (album.path + "/"+album.photoList[i].name, width, height);
+//		}
+//	}
+
+//	public static Texture2D LoadPNG(string filePath, int width, int height) {
+//		Texture2D tex = new Texture2D(2,2);
+//		byte[] fileData;
+//		if (File.Exists (filePath)) {
+//			fileData = File.ReadAllBytes (filePath);
+//			tex.LoadImage (fileData);
+//			tex = ScaleTexture(tex,width,height);
+//			Debug.Log ("loaded files");
+//		} else {
+//			Debug.Log ("Did not load files: "+filePath);
+//		}
+//		return tex;
+//	}
 
 	private static Texture2D ScaleTexture(Texture2D source,int targetWidth,int targetHeight) {
 		Texture2D result=new Texture2D(targetWidth,targetHeight,source.format,true);
@@ -68,8 +73,8 @@ public class SlideShow : MonoBehaviour {
 	{
 		if(timeSinceLastUpdate > changeTime &&  currentSlide < slides.Length)
 		{	
-			Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
-			GetComponent<SpriteRenderer>().sprite = sprite;
+//			Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
+			GetComponent<SpriteRenderer>().sprite = slides[currentSlide];
 			currentSlide = (currentSlide+1) % slides.Length;
 			timeSinceLastUpdate = 0.0f;
 		}

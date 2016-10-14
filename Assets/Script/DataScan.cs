@@ -10,9 +10,11 @@ public class DataScan : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rootModel = new RootModel ();
-		buildRootModel ();
-		currentAlbum = rootModel.albumList [1];
+		if (rootModel == null) {
+			rootModel = new RootModel ();
+			buildRootModel ();
+			currentAlbum = rootModel.albumList [1];
+		}
 //		printRootModel ();
 	}
 	public void printRootModel(){
