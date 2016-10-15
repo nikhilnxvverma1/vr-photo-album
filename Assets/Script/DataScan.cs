@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 public class DataScan : MonoBehaviour {
@@ -13,7 +14,7 @@ public class DataScan : MonoBehaviour {
 		if (rootModel == null) {
 			rootModel = new RootModel ();
 			buildRootModel ();
-			currentAlbum = rootModel.albumList [1];
+			currentAlbum = rootModel.albumList [0];
 		}
 //		printRootModel ();
 	}
@@ -39,7 +40,6 @@ public class DataScan : MonoBehaviour {
 			rootModel.albumList[i+1].path = dirs[i].FullName;
 			rootModel.albumList[i+1].name = dirs[i].Name;
 			loadtoAlbum (rootModel.albumList[i+1], dirs[i]);
-//			Debug.Log (rootModel.albumList [i].name);
 		}
 	}
 
@@ -57,18 +57,42 @@ public class DataScan : MonoBehaviour {
 		}
 		return tex;
 	}
+	private void buildDictionary(string filepath, Dictionary<string, string> dict){
+		string line;
+		// Read the file and display it line by line.
+		System.IO.StreamReader file = 
+			new System.IO.StreamReader(filepath);
+		while((line = file.ReadLine()) != null)
+		{
+			string[] parts = line.Split (new char[]{ ',' }, 2);
+			//Debug.Log (parts.Length+" *"+parts [0]+"->"+parts [1]);
+			dict.Add (parts [0], parts [1]);
+		}
+
+		file.Close();
+	}
 
 	private void loadtoAlbum(Album album, DirectoryInfo dir){
-		FileInfo[] info = dir.GetFiles("*.png");
+		FileInfo[] info = dir.GetFiles("*.txt");
+		bool hasDesc = info != null && info.Length > 0;
+		Dictionary<string, string> dictionary = new Dictionary<string, string> ();
+		if (hasDesc) {
+			buildDictionary (info [0].FullName, dictionary);
+		}
+		info = dir.GetFiles("*.png");
 		album.photoList = new Photo[info.Length];
 		for (int i = 0; i < info.Length; i++) {
 			album.photoList [i] = new Photo ();
 			album.photoList [i].name = info [i].Name;
-//			Debug.Log ("In "+album.name+" Found :"+info [i].Name);
 			Texture2D t = LoadPNG(info[i].FullName, album.photoList[i]);
 			album.photoList [i].width = t.width;
 			album.photoList [i].height = t.height;
 			album.photoList [i].texture = t;
+			if (dictionary.ContainsKey (info [i].Name)) {
+				album.photoList [i].description = dictionary [info [i].Name];
+			} else {
+				album.photoList [i].description = "";
+			}
 		}
 	}
 	// Update is called once per frame
