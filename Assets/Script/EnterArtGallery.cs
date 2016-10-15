@@ -5,6 +5,7 @@ using System.Collections;
 public class EnterArtGallery : MonoBehaviour {
 
 	private GameObject[] doors;
+	public Camera oculus;
 	// Use this for initialization
 	void Start()
 	{
@@ -21,6 +22,7 @@ public class EnterArtGallery : MonoBehaviour {
 //		}
 		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+//		var ray = new Ray(oculus.transform.position, oculus.transform.forward);
 		RaycastHit hitInfo;
 
 		if (Physics.Raycast(ray, out hitInfo))
@@ -32,8 +34,8 @@ public class EnterArtGallery : MonoBehaviour {
 //				var sprite = hitObject.transform.FindChild("ExitIcon").gameObject;
 //				sprite.SetActive(true);
 //			}
-			if (hitObject.tag == "doors"){
-				Debug.Log ("Looking at door press Enter to enter");
+			if (hitObject.tag == "doors" && hitInfo.distance < 10){
+				Debug.Log ("Looking at door press Enter to enter Distance: "+hitInfo.distance);
 				if (Input.GetKeyDown (KeyCode.Return)) {
 					Debug.Log ("Doing Door actions");
 					var doorInfo = hitObject.GetComponent<DoorInfo> ();
@@ -42,10 +44,6 @@ public class EnterArtGallery : MonoBehaviour {
 					SceneManager.LoadScene ("ArtGallery");
 				}
 			}
-
-
-
-
 		}
 
 
