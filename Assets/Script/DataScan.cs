@@ -14,7 +14,7 @@ public class DataScan : MonoBehaviour {
 		if (rootModel == null) {
 			rootModel = new RootModel ();
 			buildRootModel ();
-			currentAlbum = rootModel.albumList [0];
+			currentAlbum = rootModel.albumList [1];
 		}
 //		printRootModel ();
 	}

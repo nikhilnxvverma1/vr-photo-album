@@ -19,38 +19,23 @@ public class RayCastRedDot : MonoBehaviour {
 		var ray = new Ray(camera.transform.position, camera.transform.forward);
 		RaycastHit hitInfo;
 
-		if (Physics.Raycast(ray, out hitInfo))
-		{
+		if (Physics.Raycast (ray, out hitInfo)) {
 			GameObject hitObject = hitInfo.transform.root.gameObject;
 			if (hitObject.tag == "Picture") {
 				Debug.Log ("Hovered  - " + hitObject.tag + ", " + hitInfo.distance);
 				//GetComponent<Renderer>().material.color = Color.cyan;
-				var r = hitObject.GetComponent<Renderer>();
-				Material mat = new Material(Shader.Find("Unlit/UnlitAlphaWithFade"));
-				mat.SetTexture("_MainTex", DataScan.rootModel.albumList[2].photoList[1].texture);
+				var r = hitObject.GetComponent<Renderer> ();
+				Material mat = new Material (Shader.Find ("Unlit/UnlitAlphaWithFade"));
+				mat.SetTexture ("_MainTex", DataScan.rootModel.albumList [2].photoList [1].texture);
 				r.material = mat;
 			}
 			prefabRed.transform.position = hitInfo.point;
-
-			//			Debug.Log ("Creating Red point "+hitInfo.point);
-			//			Debug.Log ("Creating Red normal "+hitInfo.normal);
-			//			Instantiate( prefabRed, hitInfo.point, Quaternion.identity );
-
-			//			else
-			//				Debug.Log ("oops no Hovered");
-
-
-			//			Debug.Log("Mouse is over" + hitInfo.collider.name);
-
-			//			SelectObject(hitObject);
-			//
+			float val = hitInfo.distance/200;
+			prefabRed.transform.localScale = new Vector3 (val, val, val);
 		}
-		//		else {
-		//			ClearSelection();
-		//		}
-
 
 	}
+
 	void SelectObject(GameObject obj)
 	{
 		if (hoeveredObeject != null)
@@ -70,11 +55,8 @@ public class RayCastRedDot : MonoBehaviour {
 			r.material = m;
 		}
 		//}
-
-
-
-
 	}
+
 	void ClearSelection()
 	{
 		if (hoeveredObeject == null)
