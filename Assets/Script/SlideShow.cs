@@ -18,9 +18,11 @@ public class SlideShow : MonoBehaviour {
 	{
 		album = DataScan.rootModel.albumList[index];
 		LoadSprites ();
-		Sprite sprite = slides [currentSlide];
-		GetComponent<SpriteRenderer>().sprite = sprite;
-		currentSlide = currentSlide + 1 % slides.Length;
+		if (slides.Length > 0) {
+			Sprite sprite = slides [currentSlide];
+			GetComponent<SpriteRenderer> ().sprite = sprite;
+			currentSlide = currentSlide + 1 % slides.Length;
+		}
 		timeSinceLastUpdate = 0.0f;
 	}
 
@@ -71,13 +73,14 @@ public class SlideShow : MonoBehaviour {
 
 	void Update()
 	{
-		if(timeSinceLastUpdate > changeTime &&  currentSlide < slides.Length)
-		{	
+		if (slides.Length > 0) {
+			if (timeSinceLastUpdate > changeTime && currentSlide < slides.Length) {	
 //			Sprite sprite = Sprite.Create(slides[currentSlide], new Rect(0,0,width, height), new Vector2(0.5f,0.0f), 1.0f);
-			GetComponent<SpriteRenderer>().sprite = slides[currentSlide];
-			currentSlide = (currentSlide+1) % slides.Length;
-			timeSinceLastUpdate = 0.0f;
+				GetComponent<SpriteRenderer> ().sprite = slides [currentSlide];
+				currentSlide = (currentSlide + 1) % slides.Length;
+				timeSinceLastUpdate = 0.0f;
+			}
+			timeSinceLastUpdate += Time.deltaTime;
 		}
-		timeSinceLastUpdate += Time.deltaTime;
 	}
 }
