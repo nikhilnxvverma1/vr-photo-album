@@ -59,6 +59,10 @@ public class ImageBank {
 		return perimeter;
 	}
 
+	public int getTotalContainers(){
+		return totalContainers;
+	}
+
 	public ImageContainer PopImageContainers(int n){
 		ImageContainer t=top;
 		ImageContainer popStart=null;

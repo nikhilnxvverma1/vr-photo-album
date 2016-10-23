@@ -12,7 +12,17 @@ public class Tilemap : MonoBehaviour {
 		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
 		BuildFromTilemap();
 		Album album=GenerateFictitiousAlbum(100);
+		double maxFrameWidth=TileLength*1.5;
+		double maxFrameHeight=TileLength;
+		ImageBank imageBank=new ImageBank(album,maxFrameWidth,maxFrameHeight);
+		LayoutStrategy layoutStrategy;
+		if(imageBank.getPerimeter()<30){//TODO will be changed later based on experiments
+			layoutStrategy=new StarLayoutStrategy();
+		}else{
+			layoutStrategy=new CyclicLayoutStrategy();
+		}
 
+		Room mainRoom=layoutStrategy.BuildLayout(imageBank,TileLength);
 	}
 	
 	// Update is called once per frame
