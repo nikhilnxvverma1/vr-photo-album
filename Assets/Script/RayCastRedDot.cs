@@ -30,7 +30,7 @@ public class RayCastRedDot : MonoBehaviour {
 				r.material = mat;
 			}
 			prefabRed.transform.position = hitInfo.point;
-			float val = hitInfo.distance/200;
+			float val = hitInfo.distance/500;
 			prefabRed.transform.localScale = new Vector3 (val, val, val);
 		}
 
