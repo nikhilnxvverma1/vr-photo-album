@@ -2,6 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Room : TileGrid{
-	List<Corridor> corridors;
+public class Room {
+	List<Corridor> corridors; 
 }

@@ -6,6 +6,7 @@ public class ImageContainer {
 	double gap;
 	double y;
 	GameObject photoFrame;
+	ImageContainer next;
 
 	ImageContainer(Photo photo){
 		this.photo=photo;
