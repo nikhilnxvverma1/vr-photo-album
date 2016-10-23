@@ -3,8 +3,8 @@ using System.Collections;
 
 public class ImageBank {
 	private double perimeter;
-	private ImageContainer unusedStart=null;
-	private ImageContainer usedStart=null;
+	private ImageContainer top=null;
+	private int totalContainers=0;
 	private double maxHeight;
 	private double maxWidth;
 	private double largestHeightOfAPhoto;
@@ -15,7 +15,7 @@ public class ImageBank {
 		this.maxHeight=maxHeight;
 		this.maxWidth=maxWidth;
 		this.ComputeLargestDimensions(album);
-		this.unusedStart=MakeImageContainerListAndComputePerimeter(album);
+		this.totalContainers=MakeImageContainerListAndComputePerimeter(album);
 	}
 
 	private void ComputeLargestDimensions(Album album){
@@ -32,8 +32,9 @@ public class ImageBank {
 		}
 	}
 
-	private ImageContainer MakeImageContainerListAndComputePerimeter(Album album){
-		ImageContainer start=null;
+	private int MakeImageContainerListAndComputePerimeter(Album album){
+		int total=0;
+		ImageContainer top=null;
 		ImageContainer last=null;
 		this.perimeter=0;
 		for( int i=0;i<album.photoList.Length;i++){
@@ -43,7 +44,7 @@ public class ImageBank {
 			ImageContainer imageContainer=new ImageContainer(photo,normalizedWidth,normalizedHeight);
 
 			if(last==null){
-				start=imageContainer;
+				top=imageContainer;
 				last=imageContainer;
 			}else{
 				last.setNext(imageContainer);
@@ -51,12 +52,31 @@ public class ImageBank {
 
 			this.perimeter+=imageContainer.getWidth();
 		}
-		return start;
+		return total;
 	}
 
 	public double getPerimeter(){
 		return perimeter;
 	}
 
-
+	public ImageContainer PopImageContainers(int n){
+		ImageContainer t=top;
+		ImageContainer popStart=null;
+		ImageContainer lastPopped=null;
+		int i=0;
+		while(t!=null && i++ < n){
+			if(lastPopped==null){
+				popStart=t;
+				lastPopped=t;
+			}
+			//they are already linked so ne need to link them again
+			//just move the top down
+			top=top.getNext();
+			//reduce the total perimeter in the image bank
+			this.perimeter-=t.getWidth();
+			this.totalContainers--;
+			t=t.getNext();
+		}
+		return popStart;
+	}
 }

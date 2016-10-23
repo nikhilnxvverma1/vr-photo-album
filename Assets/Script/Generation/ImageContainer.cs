@@ -10,7 +10,7 @@ public class ImageContainer {
 	GameObject photoFrame;
 	ImageContainer next=null;
 
-	ImageContainer(Photo photo,double normalizedWidth,double normalizedHeight){
+	public ImageContainer(Photo photo,double normalizedWidth,double normalizedHeight){
 		this.photo=photo;
 		this.normalizedWidth=normalizedWidth;
 		this.normalizedHeight=normalizedHeight;
@@ -22,6 +22,10 @@ public class ImageContainer {
 
 	public void setNext(ImageContainer imageContainer){
 		next=imageContainer;
+	}
+
+	public ImageContainer getNext(){
+		return next;
 	}
 
 }
