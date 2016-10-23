@@ -12,6 +12,7 @@ public class Tilemap : MonoBehaviour {
 		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
 		BuildFromTilemap();
 		Album album=GenerateFictitiousAlbum(100);
+
 	}
 	
 	// Update is called once per frame
