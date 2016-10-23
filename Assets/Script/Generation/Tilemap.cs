@@ -5,8 +5,7 @@ public class Tilemap : MonoBehaviour {
 	const float TileLength=2;
 	int rows,columns;	
 
-	Tile [][] tileGrid;
-	StreakPlacement [] streakPlacements;
+	Tile [][] tileGrid;	
 
 	// Use this for initialization
 	void Start () {
