@@ -6,8 +6,8 @@ public class GenerateLobby : MonoBehaviour {
 	// Use this for initialization
 	public GameObject door, slideshow;
 	void Start () {
-		int size = (int)System.Math.Ceiling( DataScan.rootModel.albumList.Length / 2.0);
-		float scaleFactor = size*2.3f;
+		int size = (int)System.Math.Ceiling( (DataScan.rootModel.albumList.Length-1) / 2.0);
+		float scaleFactor = size*3f;
 		float translate = -10 * scaleFactor / 2 + 21.7f;
 		GameObject leftWall = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		leftWall.name = "leftWall";
@@ -34,9 +34,9 @@ public class GenerateLobby : MonoBehaviour {
 		ceiling.transform.localPosition = new Vector3(-.653f, 22.4f, translate);
 		ceiling.transform.eulerAngles = new Vector3(-180, 0, 0);
 		int i;
-		for (i = 0; i < size;i++)
+		for (i = 1; i <= size;i++)
 		{
-			float pos = -scaleFactor * 10 / size * i + 10f;
+			float pos = -scaleFactor * 10 / size * i + 30f;
 			GameObject cur_door = (GameObject)Instantiate(door, new Vector3(-25.9f, 0, pos),Quaternion.Euler(new Vector3(0,-90,0)));
 			var doorScript = cur_door.GetComponent<DoorInfo>();
 			doorScript.albumIndex = i;
@@ -45,10 +45,10 @@ public class GenerateLobby : MonoBehaviour {
 			slideScript.index = i;
 
 		}
-		int secHalf = (int)System.Math.Floor(DataScan.rootModel.albumList.Length / 2.0);
-		for (i=0;i<secHalf; i++)
+		int secHalf = (int)System.Math.Floor((DataScan.rootModel.albumList.Length-1) / 2.0);
+		for (i=1;i<=secHalf; i++)
 		{
-			float pos = size > secHalf ? (-scaleFactor * 10 / secHalf * i + 5f) : (-scaleFactor * 10 / secHalf * i + 10f);
+			float pos = size > secHalf ? (-scaleFactor * 10 / size * i + 20f) : (-scaleFactor * 10 / size * i + 30f);
 			GameObject cur_door = (GameObject)Instantiate(door, new Vector3(26.2f, 0, pos), Quaternion.Euler(new Vector3(0, 90, 0)));
 			var script = cur_door.GetComponent<DoorInfo>();
 			script.albumIndex = i+size;
