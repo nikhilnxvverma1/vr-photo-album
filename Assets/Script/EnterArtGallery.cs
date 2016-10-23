@@ -36,13 +36,14 @@ public class EnterArtGallery : MonoBehaviour {
 //			}
 			if (hitObject.tag == "doors" && hitInfo.distance < 10){
 				Debug.Log ("Looking at door press Enter to enter Distance: "+hitInfo.distance);
-				if (Input.GetKeyDown (KeyCode.Return)) {
+				if (Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown ("joystick button 0") ||
+					(DataScan.OS == DataScan.OS_TYPE.MAC && Input.GetKeyDown ("joystick button 16"))){
 					Debug.Log ("Doing Door actions");
 					var doorInfo = hitObject.GetComponent<DoorInfo> ();
 					DataScan.currentAlbum = DataScan.rootModel.albumList [doorInfo.albumIndex];
 					Debug.Log ("Selected Album now:" + DataScan.currentAlbum.name);
 					SceneManager.LoadScene ("ArtGallery");
-				}
+				} 
 			}
 		}
 

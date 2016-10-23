@@ -8,6 +8,8 @@ public class DataScan : MonoBehaviour {
 	private string rootFolder = "Assets/Images/Data Images";
 	public static RootModel rootModel;
 	public static Album currentAlbum;
+	public static OS_TYPE OS;
+	public enum OS_TYPE{MAC,WINDOWS};
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +18,10 @@ public class DataScan : MonoBehaviour {
 			buildRootModel ();
 			currentAlbum = rootModel.albumList [1];
 		}
+		if (SystemInfo.operatingSystem.Contains ("Windows"))
+			OS = OS_TYPE.WINDOWS;
+		else
+			OS = OS_TYPE.MAC;
 //		printRootModel ();
 	}
 	public void printRootModel(){

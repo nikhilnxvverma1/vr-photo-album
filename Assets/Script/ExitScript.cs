@@ -32,12 +32,17 @@ public class ExitScript : MonoBehaviour
                 var sprite = hitObject.transform.FindChild("ExitIcon").gameObject;
                 sprite.SetActive(true);
             }
-            if (hitObject.tag == "Door" && Input.GetKeyDown(KeyCode.Return))
-            {
+			if (hitObject.tag == "Door" && Input.GetKeyDown (KeyCode.Return)) {
 
-                var j2s = hitObject.GetComponent<JumpToScene>();
-                SceneManager.LoadScene(j2s.scene);
-            }
+				var j2s = hitObject.GetComponent<JumpToScene> ();
+				SceneManager.LoadScene (j2s.scene);
+			} else if (DataScan.OS == DataScan.OS_TYPE.MAC && Input.GetKeyDown ("joystick button 16")) {
+				var j2s = hitObject.GetComponent<JumpToScene> ();
+				SceneManager.LoadScene (j2s.scene);
+			} else if (Input.GetKeyDown ("joystick button 0")) {
+				var j2s = hitObject.GetComponent<JumpToScene> ();
+				SceneManager.LoadScene (j2s.scene);
+			}
 
 
 
