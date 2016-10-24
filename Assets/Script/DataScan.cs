@@ -44,7 +44,7 @@ public class DataScan : MonoBehaviour {
 		for (int i = 0; i < dirs.Length; i++) {
 			rootModel.albumList[i+1] = new Album ();
 			rootModel.albumList[i+1].path = dirs[i].FullName;
-			rootModel.albumList[i+1].name = dirs[i].Name;
+			rootModel.albumList [i + 1].name = dirs [i].Name;
 			loadtoAlbum (rootModel.albumList[i+1], dirs[i]);
 		}
 	}
@@ -84,6 +84,12 @@ public class DataScan : MonoBehaviour {
 		Dictionary<string, string> dictionary = new Dictionary<string, string> ();
 		if (hasDesc) {
 			buildDictionary (info [0].FullName, dictionary);
+		}
+		info = dir.GetFiles("*.mp3");
+		bool hasAudio = info != null && info.Length > 0;
+		if (hasAudio) {
+//			album.audio = info [0].Name.Split(new char[]{'.'},2)[0];
+			album.audio = rootFolder+"/"+album.name+"/"+info [0].Name;
 		}
 		info = dir.GetFiles("*.png");
 		album.photoList = new Photo[info.Length];
