@@ -34,7 +34,7 @@ public class ImageBank {
 
 	private int MakeImageContainerListAndComputePerimeter(Album album){
 		int total=0;
-		ImageContainer top=null;
+//		ImageContainer top=null;
 		ImageContainer last=null;
 		this.perimeter=0;
 		for( int i=0;i<album.photoList.Length;i++){
@@ -45,11 +45,11 @@ public class ImageBank {
 
 			if(last==null){
 				top=imageContainer;
-				last=imageContainer;
 			}else{
 				last.setNext(imageContainer);
 			}
-
+			last=imageContainer;
+			total++;
 			this.perimeter+=imageContainer.getWidth();
 		}
 		return total;
@@ -71,8 +71,8 @@ public class ImageBank {
 		while(t!=null && i++ < n){
 			if(lastPopped==null){
 				popStart=t;
-				lastPopped=t;
 			}
+			lastPopped=t;
 			//they are already linked so ne need to link them again
 			//just move the top down
 			top=top.getNext();
@@ -81,6 +81,17 @@ public class ImageBank {
 			this.totalContainers--;
 			t=t.getNext();
 		}
+		if(lastPopped!=null){
+			lastPopped.setNext(null);//to terminate the list
+			
+		}
 		return popStart;
+	}
+
+	public ImageContainer PopAll(){
+		ImageContainer entireList=top;
+		top=null;
+		totalContainers=0;
+		return entireList;
 	}
 }

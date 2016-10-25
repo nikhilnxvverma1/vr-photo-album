@@ -15,13 +15,7 @@ public class Tilemap : MonoBehaviour {
 		double maxFrameWidth=TileLength*1.5;
 		double maxFrameHeight=TileLength;
 		ImageBank imageBank=new ImageBank(album,maxFrameWidth,maxFrameHeight);
-		LayoutStrategy layoutStrategy;
-		if(imageBank.getPerimeter()<30){//TODO will be changed later based on experiments
-			layoutStrategy=new StarLayoutStrategy();
-		}else{
-			layoutStrategy=new CyclicLayoutStrategy();
-		}
-
+		LayoutStrategy layoutStrategy=new BlockLayoutStrategy();
 		Room mainRoom=layoutStrategy.BuildLayout(imageBank,TileLength);
 	}
 	
