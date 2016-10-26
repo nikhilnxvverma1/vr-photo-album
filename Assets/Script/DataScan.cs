@@ -24,7 +24,7 @@ public class DataScan : MonoBehaviour {
 			OS = OS_TYPE.MAC;
 //		printRootModel ();
 	}
-	public void printRootModel(){
+	public static void printRootModel(){
 		for (int i = 0; i < rootModel.albumList.Length; i++) {
 			Debug.Log ("Folder "+rootModel.albumList[i].name+" has:"	);
 			for (int j = 0; j < rootModel.albumList[i].photoList.Length; j++) {
