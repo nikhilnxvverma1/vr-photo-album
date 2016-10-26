@@ -66,4 +66,9 @@ public class Room {
 	private int Units(double width,double unitWidth){
 		return Mathf.CeilToInt((float)(width/unitWidth));
 	}
+
+	/** Turns the room on its side, by essentially swapping the width and the height */
+	public void turn(){
+		
+	}
 }
