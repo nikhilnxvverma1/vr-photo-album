@@ -6,6 +6,7 @@ using UnityEditor;
 public class PlayMusic : MonoBehaviour {
 
 	// Use this for initialization
+	public bool isEnabled;
 	void Start () {
 		Debug.Log("Trying to play music: " + DataScan.currentAlbum.audio);
 		AudioSource audio = GetComponent<AudioSource>();
@@ -15,7 +16,7 @@ public class PlayMusic : MonoBehaviour {
 
 		}
 		audio.clip = c;
-		//audio.Play();	
+		if(isEnabled) audio.Play();	
 	}
 	
 	// Update is called once per frame
