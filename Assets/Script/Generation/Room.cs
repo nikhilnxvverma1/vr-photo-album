@@ -68,7 +68,9 @@ public class Room {
 	}
 
 	/** Turns the room on its side, by essentially swapping the width and the height */
-	public void turn(){
-		
+	public void Turn(){
+		int t=width;
+		width=height;
+		height=t;
 	}
 }

@@ -54,7 +54,7 @@ public class BlockLayoutStrategy: LayoutStrategy{
 			//try to fit this room in the lowest height level
 
 			HeightLevel lowestFittingHeightLevel=FindHeightLevelForRoom(start,room);
-			int columnStart=FindColumnStartOnHeightLevel(room,lowestFittingHeightLevel,occupancy);
+			int columnStart=FindColumnStartOnHeightLevel(room,lowestFittingHeightLevel,occupancy,maxWidth);
 			start=FixateRoomOnHeightLevel(room,lowestFittingHeightLevel,columnStart,start);
 			FillOccupancyWithRoom(occupancy,room);
 			FindAndMakeOpeningsWithAdjacentRooms(room,occupancy,maxHeight,maxWidth);
@@ -65,21 +65,63 @@ public class BlockLayoutStrategy: LayoutStrategy{
 	 * Traverse the height list and find the appropriate height to fit this room,
 	 * Keep in mind that this might also turn the room
 	*/
-	private HeightLevel FindHeightLevelForRoom(HeightLevel start,Room room){
+	private HeightLevel FindHeightLevelForRoom(HeightLevel start,Room room){		
 		HeightLevel t=start;
+		int smallestHeight=9999;
+		HeightLevel fittingHeightLevel=null;
+		HeightLevel biggestHightLevel=null;
+		int biggestHeight=0;
+		bool roomNeedsToTurnToFit=false;
 		while(t!=null){
-
+			if(t.rowHeight<smallestHeight){
+				if(t.width>room.width){
+					roomNeedsToTurnToFit=false;
+					smallestHeight=t.rowHeight;
+					fittingHeightLevel=t;
+				}else if(t.width>room.height){
+					roomNeedsToTurnToFit=true;
+					smallestHeight=t.rowHeight;
+					fittingHeightLevel=t;
+				}
+				if(t.rowHeight>=biggestHeight){
+					biggestHeight=t.rowHeight;
+					biggestHightLevel=t;
+				}
+			}
 			t=t.next;
 		}
-		return null;
+
+		if(fittingHeightLevel==null){
+			fittingHeightLevel=biggestHightLevel;
+		}
+
+		if(roomNeedsToTurnToFit){
+			room.Turn();
+		}
+		return fittingHeightLevel;
 	}
 
 	/**
 	 * Finds the start column based on the height level and keeping in mind to allow maximum adjacency to
 	 * other rooms
 	 */
-	private int FindColumnStartOnHeightLevel(Room room, HeightLevel heightLevel, Room[][] grid){
-		return 0;
+	private int FindColumnStartOnHeightLevel(Room room, HeightLevel heightLevel, Room[][] grid,int maxWidth){
+		int columnStart=heightLevel.columnStart;
+
+		while(columnStart-1>=0&& grid[heightLevel.rowHeight][columnStart-1]==null){
+			columnStart--;
+		}
+
+		//if it didn't touch an adjacent room, 
+		if(grid[heightLevel.rowHeight][columnStart]==null){
+			//go in the other direction
+			columnStart=heightLevel.columnStart;
+			while(columnStart+room.width+1<=maxWidth&& grid[heightLevel.rowHeight][columnStart+room.width+1]==null){
+				columnStart++;
+			}
+
+		}
+		return columnStart;
 	}
 
 	/**
@@ -87,7 +129,28 @@ public class BlockLayoutStrategy: LayoutStrategy{
 	 * Also modifies the HeightLevel list to create new height level and returns the start of the list
 	 */
 	private HeightLevel FixateRoomOnHeightLevel(Room room,HeightLevel heightLevel,int column,HeightLevel start){
-		return null;	
+		room.column=column;
+		room.row=heightLevel.rowHeight;
+
+		HeightLevel movingBack=heightLevel;
+		for(int shift=heightLevel.columnStart;shift>=column;shift--){				
+			if((movingBack.previous!=null)&&
+				(shift<(movingBack.previous.columnStart+movingBack.previous.width))){
+				movingBack=movingBack.previous;
+			}
+		}
+
+		HeightLevel movingForward=heightLevel;
+		for(int shift=heightLevel.columnStart+heightLevel.width;shift<(column+room.width);shift++){
+			if((movingForward.next!=null)&&
+				(shift>(movingForward.next.columnStart))){
+				movingBack=movingBack.previous;
+			}
+		}
+
+		// combine and divide moving backward and moving forward
+		movingBack.DivideByIntroducingNewHeight(heightLevel.rowHeight+room.height,room.column,room.width,movingBack);
+		return start;	//start will almost never change because we modify the start not change it.
 	}
 
 	/** Finds all rooms adjacent to the room in the room grid and creates opening between them**/
@@ -118,6 +181,66 @@ class HeightLevel{
 		this.width=width;
 	}
 
+	public void DivideByIntroducingNewHeight(int newHeight,int newHeightColumn,int newHeightWidth,HeightLevel overlappingEnd){
+		//retain the old height and width before overwriting
+		int oldHeight=rowHeight;
+		int oldWidth=this.width;
+
+		// if new height belongs to this height level
+		if(newHeightColumn==columnStart){
+			//retain this object and increase its height 
+			this.rowHeight=newHeight;
+			this.width=newHeightWidth;
+			if(newHeightWidth<oldWidth){
+				if(overlappingEnd==this){//this will always be true in such a case
+					//create a new height level and insert it in the next 
+					HeightLevel remainingWidthLevel=new HeightLevel(oldHeight,newHeightColumn+newHeightWidth,oldWidth-newHeightWidth);
+					remainingWidthLevel.previous=this;
+					remainingWidthLevel.next=this.next;
+					this.next=remainingWidthLevel;
+					if(this.next!=null){
+						remainingWidthLevel.next.previous=remainingWidthLevel;
+					}
+				}
+			}else if(newHeightWidth>oldWidth){
+				if(overlappingEnd!=this){//this assertion will always be true
+					//make the overlapping end the next to this
+					int amountOverlapped=(newHeightColumn+newHeightWidth)-overlappingEnd.columnStart;
+					overlappingEnd.columnStart=newHeightColumn+newHeightWidth;
+					overlappingEnd.width=overlappingEnd.width-amountOverlapped;
+					overlappingEnd.previous=this;
+					this.next=overlappingEnd;
+				}
+			}
+
+		}else {
+			int oldColumnStart=this.columnStart;
+			this.columnStart=newHeightColumn;
+			this.width=newHeightWidth;
+			HeightLevel elevatedLevel=new HeightLevel(newHeight,newHeightColumn,newHeightWidth);
+			elevatedLevel.previous=this;
+
+			if(overlappingEnd==this){
+				int amountOverlapped=(newHeightColumn+newHeightWidth)-oldColumnStart;
+				HeightLevel remainingWidthLevel=new HeightLevel(oldHeight,newHeightColumn+newHeightWidth,oldWidth-amountOverlapped);
+				elevatedLevel.next=remainingWidthLevel;
+				remainingWidthLevel.previous=elevatedLevel;
+				remainingWidthLevel.next=this.next;
+				if(this.next!=null){
+					this.next.previous=remainingWidthLevel;
+				}
+				this.next=elevatedLevel;
+			}else{
+				int amountOverlapped=(newHeightColumn+newHeightWidth)-overlappingEnd.columnStart;
+				overlappingEnd.columnStart=newHeightColumn+newHeightWidth;
+				overlappingEnd.width=overlappingEnd.width-amountOverlapped;
+				this.next=overlappingEnd;
+				overlappingEnd.previous=this;					
+			}
+
+		}
+
+	}
 }
 
 
