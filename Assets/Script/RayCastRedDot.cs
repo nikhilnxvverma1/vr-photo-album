@@ -31,7 +31,7 @@ public class RayCastRedDot : MonoBehaviour {
 				Debug.Log ("Min "+ r.bounds.min);
 				Debug.Log ("Extends "+ r.bounds.extents);
 				Material mat = new Material (Shader.Find ("Unlit/UnlitAlphaWithFade"));
-				mat.SetTexture ("_MainTex", DataScan.currentAlbum.photoList [0].texture);
+				mat.SetTexture ("_MainTex", DataScan.rootModel.albumList[1].photoList [0].texture);
 				r.material = mat;
 				if (!lookingAtPicture) {
 					r.transform.localScale = r.transform.localScale * 1.3f;
@@ -39,7 +39,7 @@ public class RayCastRedDot : MonoBehaviour {
 					picture = hitObject;
 					var obj = picture.GetComponentInChildren<TextMesh> ();
 					var picInfo = hitObject.GetComponent<PictureInfo> ();
-					wrapme(obj,DataScan.currentAlbum.photoList[picInfo.pictureIndex].description);
+					wrapme(obj,DataScan.rootModel.albumList[1].photoList[picInfo.pictureIndex].description);
 				}
 			} else {
 				if (lookingAtPicture) {
