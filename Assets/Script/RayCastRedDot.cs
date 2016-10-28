@@ -8,7 +8,7 @@ public class RayCastRedDot : MonoBehaviour {
 	public Camera camera;
 	public GameObject prefabRed;
 	private bool lookingAtPicture = false;
-	private Renderer picture;
+	private GameObject picture;
 	// Use this for initialization
 	void Start () {
 		door = GameObject.FindWithTag("doors");
@@ -23,26 +23,31 @@ public class RayCastRedDot : MonoBehaviour {
 		RaycastHit hitInfo;
 		if (Physics.Raycast (ray, out hitInfo)) {
 			GameObject hitObject = hitInfo.transform.root.gameObject;
-			if (hitObject.tag == "Picture") {
+			if (hitObject.tag == "Picture" && hitInfo.distance<10) {
 				Debug.Log ("Hovered  - " + hitObject.tag + ", " + hitInfo.distance);
 				//GetComponent<Renderer>().material.color = Color.cyan;
 				var r = hitObject.GetComponent<Renderer> ();
+				Debug.Log ("Center "+r.bounds.center);
+				Debug.Log ("Min "+ r.bounds.min);
+				Debug.Log ("Extends "+ r.bounds.extents);
 				Material mat = new Material (Shader.Find ("Unlit/UnlitAlphaWithFade"));
 				mat.SetTexture ("_MainTex", DataScan.currentAlbum.photoList [0].texture);
 				r.material = mat;
 				if (!lookingAtPicture) {
-					r.transform.localScale = r.transform.localScale * 1.5f;
+					r.transform.localScale = r.transform.localScale * 1.3f;
 					lookingAtPicture = true;
-					picture = r;
-					var obj = hitObject.GetComponentInChildren<TextMesh> ();
-//					obj.text = DataScan.currentAlbum.photoList[0].description;
-					wrapme(obj,DataScan.currentAlbum.photoList[0].description); 
-				
+					picture = hitObject;
+					var obj = picture.GetComponentInChildren<TextMesh> ();
+					var picInfo = hitObject.GetComponent<PictureInfo> ();
+					wrapme(obj,DataScan.currentAlbum.photoList[picInfo.pictureIndex].description);
 				}
 			} else {
 				if (lookingAtPicture) {
-//					var r = hitObject.GetComponent<Renderer> ();
-					picture.transform.localScale = picture.transform.localScale / 1.5f;
+					var r = picture.GetComponent<Renderer> ();
+					r.transform.localScale = r.transform.localScale / 1.3f;
+					var obj = picture.GetComponentInChildren<TextMesh> ();
+					var picInfo = hitObject.GetComponent<PictureInfo> ();
+					obj.text = "";
 					lookingAtPicture = false;
 				}
 			}
@@ -54,17 +59,21 @@ public class RayCastRedDot : MonoBehaviour {
 	}
 
 	public void wrapme(TextMesh t, string text){
-	
+
 		string builder = "";
 		t.text = "";
-		float rowLimit = 1.2f; //find the sweet spot    
-//		string text = "This is some text we'll use to demonstrate word wrapping. It would be too easy if a proper wrapping was already implemented in Unity :)";
+		float rowLimit = 0.8f; //find the sweet spot 
+		var sp = picture.GetComponent<SpriteRenderer>();
+		rowLimit = sp.sprite.bounds.extents.x*1.0f;
+		//		if(sp.bounds.center > sp.bounds.extents)
+		t.transform.position = new Vector3(sp.bounds.min.x-0.3f, sp.bounds.min.y, sp.bounds.min.z);
+		//		string text = "This is some text we'll use to demonstrate word wrapping. It would be too easy if a proper wrapping was already implemented in Unity :)";
 		string[] parts = text.Split(' ');
 		float x = t.characterSize;
 		float offset = 0.0f;
 		for (int i = 0; i < parts.Length; i++)
 		{
-			Debug.Log(parts[i]);
+			//			Debug.Log(parts[i]);
 			offset += x;
 			t.text += parts[i] + " ";
 			if (offset > rowLimit)
@@ -76,39 +85,5 @@ public class RayCastRedDot : MonoBehaviour {
 		}
 	}
 
-	void SelectObject(GameObject obj)
-	{
-		if (hoeveredObeject != null)
-		{
-			if(obj == hoeveredObeject)
-				return;
-			ClearSelection();
-		}
-		hoeveredObeject = obj;
-		Renderer[] rs = hoeveredObeject.GetComponentsInChildren<Renderer>();
-		//if (hoeveredObeject == door)
-		//{
-		foreach (Renderer r in rs)
-		{
-			Material m = r.material;
-			m.color = Color.green;
-			r.material = m;
-		}
-		//}
-	}
 
-	void ClearSelection()
-	{
-		if (hoeveredObeject == null)
-			return;
-
-		Renderer[] rs = hoeveredObeject.GetComponentsInChildren<Renderer>();
-		foreach (Renderer r in rs)
-		{
-			Material m = r.material;
-			m.color = Color.white;
-			r.material = m;
-		}
-		hoeveredObeject = null;
-	}
 }
