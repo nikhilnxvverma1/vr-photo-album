@@ -79,7 +79,7 @@ public class BlockLayoutStrategy: LayoutStrategy{
 			}
 			FillOccupancyWithRoom(occupancy,room);
 			room.MakeTileGrid();
-			FindAndMakeOpeningsWithAdjacentRooms(room,occupancy,maxHeight,maxWidth);
+//			room.FindAndMakeOpeningsWithAdjacentRooms(occupancy,maxHeight,maxWidth);//not ready yet
 		}
 		return occupancy;
 	}
@@ -133,18 +133,18 @@ public class BlockLayoutStrategy: LayoutStrategy{
 	private int FindColumnStartOnHeightLevel(Room room, HeightLevel heightLevel, Room[][] grid,int maxWidth){
 		int columnStart=heightLevel.columnStart;
 
-		while(columnStart-1>=0&& grid[heightLevel.rowHeight][columnStart-1]==null){
-			columnStart--;
-		}
-
+		while (columnStart + room.width + 1 < maxWidth && grid [heightLevel.rowHeight] [columnStart + room.width + 1] == null) {
+			columnStart++;
+		}			
+			
 		//if it didn't touch an adjacent room, 
 		if(columnStart-1<0||grid[heightLevel.rowHeight][columnStart-1]==null){
 			//go in the other direction
 			columnStart=heightLevel.columnStart;
 
-			while (columnStart + room.width + 1 < maxWidth && grid [heightLevel.rowHeight] [columnStart + room.width + 1] == null) {
-				columnStart++;
-			}			
+			while(columnStart-1>=0&& grid[heightLevel.rowHeight][columnStart-1]==null){
+				columnStart--;
+			}		
 		}
 		return columnStart;
 	}
@@ -178,10 +178,7 @@ public class BlockLayoutStrategy: LayoutStrategy{
 		return start;	//start will almost never change because we modify the start not change it.
 	}
 
-	/** Finds all rooms adjacent to the room in the room grid and creates opening between them**/
-	private int FindAndMakeOpeningsWithAdjacentRooms(Room room,Room[][] grid,int rows,int columns){
-		return 0;
-	}
+
 
 	/** Fills the room grid with the specified room for its position */
 	private void FillOccupancyWithRoom(Room[][] grid, Room room){

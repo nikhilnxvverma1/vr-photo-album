@@ -149,4 +149,79 @@ public class Room {
 			}
 		}
 	}
+
+	/** Finds all rooms adjacent to the room in the room grid and creates opening between them**/
+	public int FindAndMakeOpeningsWithAdjacentRooms(Room[][] grid,int totalRows,int totalColumns){
+		int totalAdjacentRooms=0;
+		//top
+		if(this.row+this.height+1<totalRows){
+			int top=this.row+this.height;
+			int start=0;
+			int end=0;
+			Room currentRoom=null;
+			for(int i=this.column;i<this.column+this.width;i++){
+				if(grid[top][i]!=currentRoom){
+					if(currentRoom!=null){
+						// make door
+						int mid=(start+end)/2;
+						int r = 0;
+						int c = mid-currentRoom.column;
+						try {
+							currentRoom.grid [r] [c].floor.type = FloorType.Blank;
+						} catch (System.Exception ex) {
+							Debug.Log("catch this "+ex.ToString());
+						}
+						this.grid[this.height-1][mid-this.column].floor.type=FloorType.Blank;
+						totalAdjacentRooms++;
+					}
+					currentRoom=grid[top][i];
+					start=i;				
+					end=i;
+				}else{
+					end=i;
+				}
+			}
+		}
+
+		//right
+		if(this.column+this.width+1<totalColumns){
+			int right=this.column+this.width;
+			int start=0;
+			int end=0;
+			Room currentRoom=null;
+			for(int i=this.row;i<this.row+this.height;i++){
+				if(grid[i][right]!=currentRoom){
+					if(currentRoom!=null){
+						Debug.Log("Before (this)");
+						Tilemap.PrintTileMap(this.grid,height,width);
+						Debug.Log("Before (currentRoom)");
+						Tilemap.PrintTileMap(currentRoom.grid,currentRoom.height,currentRoom.width);
+						// make door
+						int mid=(start+end)/2;
+						int r = mid-currentRoom.row;
+						int c = 0;
+						try {
+							currentRoom.grid [r] [c].floor.type = FloorType.Blank;
+						} catch (System.Exception ex) {
+							Debug.Log("catch this "+ex.ToString());
+						}
+						this.grid[mid-this.row][this.width-1].floor.type=FloorType.Blank;
+						totalAdjacentRooms++;
+						Debug.Log("after (this)");
+						Tilemap.PrintTileMap(this.grid,height,width);
+						Debug.Log("after (currentRoom)");
+						Tilemap.PrintTileMap(currentRoom.grid,currentRoom.height,currentRoom.width);
+					}
+					currentRoom=grid[i][right];
+					start=i;				
+					end=i;
+				}else{
+					end=i;
+				}
+			}
+		}
+
+
+		return totalAdjacentRooms;
+	}
 }

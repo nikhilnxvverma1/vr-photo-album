@@ -66,6 +66,16 @@ public class Tilemap : MonoBehaviour {
 
 	}
 
+	public static  void PrintTileMap(Tile [][]grid,int tr,int tc){
+		for(int i=0;i<tr;i++){
+			string rowString="";
+			for(int j=0;j<tc;j++){
+				rowString+=" "+grid[i][j].floor.ToString();
+			}
+			Debug.Log(rowString);
+		}
+	}
+
 	private void BuildFromTilemap(){
 		string containerPath="Tilemap/";//we might also have several themes which can be put in seperate folders
 
