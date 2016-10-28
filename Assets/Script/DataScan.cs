@@ -89,7 +89,10 @@ public class DataScan : MonoBehaviour {
 		bool hasAudio = info != null && info.Length > 0;
 		if (hasAudio) {
 //			album.audio = info [0].Name.Split(new char[]{'.'},2)[0];
-			album.audio = rootFolder+"/"+album.name+"/"+info [0].Name;
+			if (album.name != "Root")
+				album.audio = rootFolder + "/" + album.name + "/" + info [0].Name;
+			else
+				album.audio = rootFolder + "/" + info [0].Name;
 		}
 		info = dir.GetFiles("*.png");
 		album.photoList = new Photo[info.Length];
