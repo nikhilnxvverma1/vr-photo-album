@@ -16,7 +16,7 @@ public class DataScan : MonoBehaviour {
 		if (rootModel == null) {
 			rootModel = new RootModel ();
 			buildRootModel ();
-			currentAlbum = rootModel.albumList [1];
+			currentAlbum = rootModel.albumList [0];
 		}
 		if (SystemInfo.operatingSystem.Contains ("Windows"))
 			OS = OS_TYPE.WINDOWS;
