@@ -2,5 +2,5 @@
 using System.Collections;
 
 public interface LayoutStrategy {
-	Room BuildLayout(ImageBank imageBank,double unitWidth);
+	Tile[][] BuildLayout(ImageBank imageBank,double unitWidth);
 }

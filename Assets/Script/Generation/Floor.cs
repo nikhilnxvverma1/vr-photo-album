@@ -5,6 +5,18 @@ public class Floor {
 	public FloorType type;
 	public Direction direction;
 
+	public Floor(){
+	}
+
+	public Floor(FloorType type){
+		this.type=type;
+	}
+
+	public Floor(FloorType type,Direction direction){
+		this.type=type;
+		this.direction=direction;
+	}
+
 	public static Floor GetTile(string tileValue){
 		if(tileValue==null || tileValue.Trim().Length==0){
 			return null;

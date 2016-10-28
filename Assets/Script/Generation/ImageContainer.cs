@@ -17,7 +17,7 @@ public class ImageContainer {
 	}
 
 	public double getWidth(){
-		return photo.width+2*gap;
+		return normalizedWidth+2*gap;
 	}	
 
 	public void setNext(ImageContainer imageContainer){

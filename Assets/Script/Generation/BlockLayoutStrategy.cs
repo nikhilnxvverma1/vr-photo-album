@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 public class BlockLayoutStrategy: LayoutStrategy{
 	
-	public Room BuildLayout(ImageBank imageBank,double unitWidth){
+	public Tile[][] BuildLayout(ImageBank imageBank,double unitWidth){
 
 		List<Room> rooms=this.BuildRooms(imageBank,unitWidth);
-		this.FixPositionsForRoom(rooms,30);
-		return null;	
+		int columnSpan=30;
+		Room[][] occupancy=this.FixPositionsForRoom(rooms,columnSpan);
+		return MergeRoomsInToSingleTileGrid(occupancy,occupancy.Length,columnSpan);	
 	}
 
 	private List<Room> BuildRooms(ImageBank imageBank,double unitWidth){
@@ -29,8 +30,24 @@ public class BlockLayoutStrategy: LayoutStrategy{
 		}
 		return rooms;
 	}
+		
+	private Tile[][] MergeRoomsInToSingleTileGrid(Room[][] roomInfo,int totalRows,int totalColumns){
+		Tile[][] grid=new Tile[totalRows][];
+		for(int i=0;i<totalRows;i++){
+			grid[i]=new Tile[totalColumns];
+			for(int j=0;j<totalColumns;j++){
+				if (roomInfo[i][j]!=null) {
+					Room room = roomInfo [i] [j];
+					int r = i - room.row;
+					int c = j - room.column;
+					grid [i] [j] = room.grid [r] [c];
+				}
+			}
+		}
+		return grid;
+	}
 
-	private void FixPositionsForRoom(List<Room> roomList,int maxWidth){
+	private Room[][] FixPositionsForRoom(List<Room> roomList,int maxWidth){
 		
 		//for maxHeight just compute the summation of height of all rooms
 		int maxHeight=0;
@@ -49,17 +66,25 @@ public class BlockLayoutStrategy: LayoutStrategy{
 		}
 
 		HeightLevel start=new HeightLevel(0,0,maxWidth);
-
+		int maxHeightLevel=0;
 		foreach(Room room in roomList){
 			//try to fit this room in the lowest height level
 
 			HeightLevel lowestFittingHeightLevel=FindHeightLevelForRoom(start,room);
 			int columnStart=FindColumnStartOnHeightLevel(room,lowestFittingHeightLevel,occupancy,maxWidth);
 			start=FixateRoomOnHeightLevel(room,lowestFittingHeightLevel,columnStart,start);
+			int heightReached=room.row+room.height;
+			if(heightReached>maxHeightLevel){
+				maxHeightLevel=heightReached;
+			}
 			FillOccupancyWithRoom(occupancy,room);
+			room.MakeTileGrid();
 			FindAndMakeOpeningsWithAdjacentRooms(room,occupancy,maxHeight,maxWidth);
 		}
+		return occupancy;
 	}
+
+
 
 	/** 
 	 * Traverse the height list and find the appropriate height to fit this room,
@@ -113,13 +138,13 @@ public class BlockLayoutStrategy: LayoutStrategy{
 		}
 
 		//if it didn't touch an adjacent room, 
-		if(grid[heightLevel.rowHeight][columnStart]==null){
+		if(columnStart-1<0||grid[heightLevel.rowHeight][columnStart-1]==null){
 			//go in the other direction
 			columnStart=heightLevel.columnStart;
-			while(columnStart+room.width+1<=maxWidth&& grid[heightLevel.rowHeight][columnStart+room.width+1]==null){
-				columnStart++;
-			}
 
+			while (columnStart + room.width + 1 < maxWidth && grid [heightLevel.rowHeight] [columnStart + room.width + 1] == null) {
+				columnStart++;
+			}			
 		}
 		return columnStart;
 	}
@@ -144,7 +169,7 @@ public class BlockLayoutStrategy: LayoutStrategy{
 		for(int shift=heightLevel.columnStart+heightLevel.width;shift<(column+room.width);shift++){
 			if((movingForward.next!=null)&&
 				(shift>(movingForward.next.columnStart))){
-				movingBack=movingBack.previous;
+				movingForward=movingForward.next;
 			}
 		}
 
@@ -160,9 +185,13 @@ public class BlockLayoutStrategy: LayoutStrategy{
 
 	/** Fills the room grid with the specified room for its position */
 	private void FillOccupancyWithRoom(Room[][] grid, Room room){
-		for(int i=room.row;i<room.height;i++){
-			for(int j=room.column;j<room.width;j++){
-				grid[i][j]=room;
+		for(int i=room.row;i<room.row+room.height;i++){
+			for(int j=room.column;j<room.column+room.width;j++){
+				try {
+					grid [i] [j] = room;
+				} catch (System.Exception ex) {
+					Debug.Log(ex.ToString());
+				}
 			}
 		}
 	}
@@ -187,7 +216,7 @@ class HeightLevel{
 		int oldWidth=this.width;
 
 		// if new height belongs to this height level
-		if(newHeightColumn==columnStart){
+		if(newHeightColumn==this.columnStart){
 			//retain this object and increase its height 
 			this.rowHeight=newHeight;
 			this.width=newHeightWidth;
@@ -198,7 +227,7 @@ class HeightLevel{
 					remainingWidthLevel.previous=this;
 					remainingWidthLevel.next=this.next;
 					this.next=remainingWidthLevel;
-					if(this.next!=null){
+					if(remainingWidthLevel.next!=null){
 						remainingWidthLevel.next.previous=remainingWidthLevel;
 					}
 				}
@@ -213,7 +242,7 @@ class HeightLevel{
 				}
 			}
 
-		}else {
+		}else if(newHeightColumn<this.columnStart){
 			int oldColumnStart=this.columnStart;
 			this.columnStart=newHeightColumn;
 			this.width=newHeightWidth;
@@ -238,6 +267,29 @@ class HeightLevel{
 				overlappingEnd.previous=this;					
 			}
 
+		}else{			
+			this.width=newHeightColumn-this.columnStart;
+			HeightLevel elevatedLevel=new HeightLevel(newHeight,newHeightColumn,newHeightWidth);
+			elevatedLevel.previous=this;
+
+			if(overlappingEnd==this){
+				elevatedLevel.next=this.next;
+				if(this.next!=null){
+					this.next.previous=elevatedLevel;
+				}
+
+			}else{
+				int amountOverlapped=(newHeightColumn+newHeightWidth)-overlappingEnd.columnStart;
+				overlappingEnd.columnStart=newHeightColumn+newHeightWidth;
+				overlappingEnd.width=overlappingEnd.width-amountOverlapped;								
+
+				elevatedLevel.next=overlappingEnd;
+				if(overlappingEnd.next!=null){
+					overlappingEnd.next.previous=elevatedLevel;
+				}
+
+			}
+			this.next=elevatedLevel;
 		}
 
 	}

@@ -9,14 +9,18 @@ public class Tilemap : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
-		BuildFromTilemap();
+//		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
+
 		Album album=GenerateFictitiousAlbum(100);
 		double maxFrameWidth=TileLength*1.5;
 		double maxFrameHeight=TileLength;
 		ImageBank imageBank=new ImageBank(album,maxFrameWidth,maxFrameHeight);
 		LayoutStrategy layoutStrategy=new BlockLayoutStrategy();
-		Room mainRoom=layoutStrategy.BuildLayout(imageBank,TileLength);
+		this.tileGrid=layoutStrategy.BuildLayout(imageBank,TileLength);
+		this.rows=this.tileGrid.Length;
+		this.columns=this.tileGrid[0].Length;
+		MakeHoleInTheFirst3Tiles();
+		BuildFromTilemap();
 	}
 	
 	// Update is called once per frame
@@ -47,6 +51,21 @@ public class Tilemap : MonoBehaviour {
 		return fictitiousAlbum;
 	}
 
+	private void MakeHoleInTheFirst3Tiles(){		
+		int i=0;
+		while(tileGrid[0][i]==null){
+			i++;
+		}
+		tileGrid[0][i].floor.type=FloorType.Wall;
+		tileGrid[0][i].floor.direction=Direction.East;
+
+		tileGrid[0][i+1].floor.type=FloorType.Blank;
+
+		tileGrid[0][i+2].floor.type=FloorType.Wall;
+		tileGrid[0][i+2].floor.direction=Direction.West;
+
+	}
+
 	private void BuildFromTilemap(){
 		string containerPath="Tilemap/";//we might also have several themes which can be put in seperate folders
 
@@ -62,6 +81,9 @@ public class Tilemap : MonoBehaviour {
 
 		for(int i=0;i<rows;i++){
 			for(int j=0;j<columns;j++){
+				if(tileGrid[i][j]==null){
+					continue;
+				}
 				Tile tile=tileGrid[i][j];
 				//load Floor prefab
 				string floorPath=containerPath+"Floor/"+Floor.StringFor(tile.floor.type);
@@ -72,8 +94,8 @@ public class Tilemap : MonoBehaviour {
 				//load Ceiling prefab
 				string ceilingPath=containerPath+"Ceiling/"+Ceiling.StringFor(tile.ceiling.type);
 				GameObject ceilingObject=Instantiate(Resources.Load(ceilingPath,typeof(GameObject))) as GameObject;
-				ceilingObject.transform.position=new Vector3(startX+i*TileLength,0,startY+j*TileLength);
-				ceilingObject.transform.Rotate(0,AngleFor(tile.floor.direction),0);
+				ceilingObject.transform.position=new Vector3(startX+j*TileLength,0,startY+i*TileLength);
+				ceilingObject.transform.Rotate(0,AngleFor(tile.ceiling.direction),0);
 				
 			}
 		}		

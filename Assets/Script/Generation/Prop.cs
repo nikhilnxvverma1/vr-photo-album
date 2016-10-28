@@ -5,6 +5,18 @@ public class Prop {
 	public PropType type;
 	public Direction direction;
 
+	public Prop(){
+	}
+
+	public Prop(PropType type){
+		this.type=type;
+	}
+
+	public Prop(PropType type,Direction direction){
+		this.type=type;
+		this.direction=direction;
+	}
+
 	public static Prop GetTile(string tileValue){
 		if(tileValue==null || tileValue.Trim().Length==0){
 			return null;

@@ -5,6 +5,18 @@ public class Ceiling {
 	public CeilingType type;
 	public Direction direction;
 
+	public Ceiling(){
+	}
+
+	public Ceiling(CeilingType type){
+		this.type=type;
+	}
+
+	public Ceiling(CeilingType type,Direction direction){
+		this.type=type;
+		this.direction=direction;
+	}
+
 	public static Ceiling GetTile(string tileValue){
 		if(tileValue==null || tileValue.Trim().Length==0){
 			return null;
