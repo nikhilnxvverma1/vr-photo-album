@@ -110,15 +110,16 @@ public class BlockLayoutStrategy: LayoutStrategy{
 					smallestHeight=t.rowHeight;
 					fittingHeightLevel=t;
 				}
-				if(t.rowHeight>=biggestHeight){
-					biggestHeight=t.rowHeight;
-					biggestHightLevel=t;
-				}
+			}
+			if(t.rowHeight>=biggestHeight){
+				biggestHeight=t.rowHeight;
+				biggestHightLevel=t;
 			}
 			t=t.next;
 		}
 
 		if(fittingHeightLevel==null){
+			Debug.Log("couldn't find smallest height for "+room.ToString());
 			fittingHeightLevel=biggestHightLevel;
 		}
 

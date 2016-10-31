@@ -54,21 +54,23 @@ public class Room {
 		int l=Units(largestImageContainerWidth,unitWidth);
 
 		bool randomizeWidth=(Random.value>0.5);
+		int min=4;
+		int max=6;
 		if(randomizeWidth){
 			width=Random.Range(l,LargestWidth+1);
-			height=(p-2*width)/2+ Random.Range(3,5);
-			if(height<3){
-				height=3;
+			height=(p-2*width)/2+ Random.Range(min,max);
+			if(height<min){
+				height=min;
 			}
 		}else{
 			height=Random.Range(l,LargestWidth+1);
-			width=(p-2*height)/2+ Random.Range(3,5);
-			if(width<3){
-				width=3;
+			width=(p-2*height)/2+ Random.Range(min,max);
+			if(width<min){
+				width=min;
 			}
 		}
 
-		if(width<3 || height< 3){
+		if(width<min || height< min){
 			Debug.Log("wrong dimension");
 		}
 	}
@@ -178,6 +180,18 @@ public class Room {
 					end=i;
 				}
 			}
+			//if current room never got a chance to finish because of change in current room, 
+			//terminate it here
+			if(currentRoom!=null){
+				// make door
+				Debug.Log("Door with Top");
+				int mid=(start+end)/2;
+				int r = 0;
+				int c = mid-currentRoom.column;
+				currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
+				this.grid[this.height-1][mid-this.column].floor.type=FloorType.Blank;
+				totalAdjacentRooms++;
+			}
 		}
 
 		//right
@@ -204,6 +218,18 @@ public class Room {
 				}else{
 					end=i;
 				}
+			}
+			//if current room never got a chance to finish because of change in current room, 
+			//terminate it here
+			if(currentRoom!=null){
+				// make door
+				Debug.Log("Door with Right");
+				int mid=(start+end)/2;
+				int r = mid-currentRoom.row;
+				int c = 0;
+				currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
+				this.grid[mid-this.row][this.width-1].floor.type=FloorType.Blank;
+				totalAdjacentRooms++;
 			}
 		}
 
@@ -232,6 +258,18 @@ public class Room {
 					end=i;
 				}
 			}
+			//if current room never got a chance to finish because of change in current room, 
+			//terminate it here
+			if(currentRoom!=null){
+				// make door
+				Debug.Log("Door with Bottom");
+				int mid=(start+end)/2;
+				int r = currentRoom.height-1;
+				int c = mid-currentRoom.column;
+				currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
+				this.grid[0][mid-this.column].floor.type=FloorType.Blank;
+				totalAdjacentRooms++;
+			}
 		}
 
 		//left
@@ -259,8 +297,24 @@ public class Room {
 					end=i;
 				}
 			}
+			//if current room never got a chance to finish because of change in current room, 
+			//terminate it here
+			if(currentRoom!=null){
+				// make door
+				Debug.Log("Door with Left");
+				int mid=(start+end)/2;
+				int r = mid-currentRoom.row;
+				int c = currentRoom.width-1;
+				currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
+				this.grid[mid-this.row][0].floor.type=FloorType.Blank;
+				totalAdjacentRooms++;
+			}
 		}
 
 		return totalAdjacentRooms;
+	}
+
+	override public string ToString(){
+		return "Room("+row+","+column+","+width+","+height+")";
 	}
 }
