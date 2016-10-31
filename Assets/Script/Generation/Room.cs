@@ -163,14 +163,11 @@ public class Room {
 				if(grid[top][i]!=currentRoom){
 					if(currentRoom!=null){
 						// make door
+						Debug.Log("Door with Top");
 						int mid=(start+end)/2;
 						int r = 0;
 						int c = mid-currentRoom.column;
-						try {
-							currentRoom.grid [r] [c].floor.type = FloorType.Blank;
-						} catch (System.Exception ex) {
-							Debug.Log("catch this "+ex.ToString());
-						}
+						currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
 						this.grid[this.height-1][mid-this.column].floor.type=FloorType.Blank;
 						totalAdjacentRooms++;
 					}
@@ -192,25 +189,14 @@ public class Room {
 			for(int i=this.row;i<this.row+this.height;i++){
 				if(grid[i][right]!=currentRoom){
 					if(currentRoom!=null){
-						Debug.Log("Before (this)");
-						Tilemap.PrintTileMap(this.grid,height,width);
-						Debug.Log("Before (currentRoom)");
-						Tilemap.PrintTileMap(currentRoom.grid,currentRoom.height,currentRoom.width);
 						// make door
+						Debug.Log("Door with Right");
 						int mid=(start+end)/2;
 						int r = mid-currentRoom.row;
 						int c = 0;
-						try {
-							currentRoom.grid [r] [c].floor.type = FloorType.Blank;
-						} catch (System.Exception ex) {
-							Debug.Log("catch this "+ex.ToString());
-						}
+						currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
 						this.grid[mid-this.row][this.width-1].floor.type=FloorType.Blank;
 						totalAdjacentRooms++;
-						Debug.Log("after (this)");
-						Tilemap.PrintTileMap(this.grid,height,width);
-						Debug.Log("after (currentRoom)");
-						Tilemap.PrintTileMap(currentRoom.grid,currentRoom.height,currentRoom.width);
 					}
 					currentRoom=grid[i][right];
 					start=i;				
@@ -221,6 +207,59 @@ public class Room {
 			}
 		}
 
+		//bottom
+		if(this.row-1>=0){
+			int bottom=this.row-1;
+			int start=0;
+			int end=0;
+			Room currentRoom=null;
+			for(int i=this.column;i<this.column+this.width;i++){
+				if(grid[bottom][i]!=currentRoom){
+					if(currentRoom!=null){
+						// make door
+						Debug.Log("Door with Bottom");
+						int mid=(start+end)/2;
+						int r = currentRoom.height-1;
+						int c = mid-currentRoom.column;
+						currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
+						this.grid[0][mid-this.column].floor.type=FloorType.Blank;
+						totalAdjacentRooms++;
+					}
+					currentRoom=grid[bottom][i];
+					start=i;				
+					end=i;
+				}else{
+					end=i;
+				}
+			}
+		}
+
+		//left
+		if(this.column-1>=0){
+			int left=this.column-1;
+			int start=0;
+			int end=0;
+			Room currentRoom=null;
+			for(int i=this.row;i<this.row+this.height;i++){
+				if(grid[i][left]!=currentRoom){
+					if(currentRoom!=null){
+						// make door
+						Debug.Log("Door with Left");
+						int mid=(start+end)/2;
+						int r = mid-currentRoom.row;
+						int c = currentRoom.width-1;
+						currentRoom.grid [r] [c].floor.type = FloorType.Blank;						
+						this.grid[mid-this.row][0].floor.type=FloorType.Blank;
+						totalAdjacentRooms++;
+					}
+					currentRoom=grid[i][left];
+					start=i;				
+					end=i;
+				}else{
+					end=i;
+				}
+			}
+		}
 
 		return totalAdjacentRooms;
 	}

@@ -79,13 +79,15 @@ public class BlockLayoutStrategy: LayoutStrategy{
 			}
 			FillOccupancyWithRoom(occupancy,room);
 			room.MakeTileGrid();
-//			room.FindAndMakeOpeningsWithAdjacentRooms(occupancy,maxHeight,maxWidth);//not ready yet
+			int doorsMade=room.FindAndMakeOpeningsWithAdjacentRooms(occupancy,maxHeight,maxWidth);
+			if(doorsMade==0){
+				Debug.Log("No doors made");
+
+			}
 		}
 		return occupancy;
 	}
-
-
-
+		
 	/** 
 	 * Traverse the height list and find the appropriate height to fit this room,
 	 * Keep in mind that this might also turn the room

@@ -14,6 +14,10 @@ public class Tile {
 		this.prop=prop;
 		this.ceiling=ceiling;
 	}
+
+	public string ToString(){
+		return floor.ToString()+"-"+ceiling.ToString();
+	}
 }
 
 enum TileLayer{
