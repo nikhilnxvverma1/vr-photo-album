@@ -9,16 +9,23 @@ public class ExitScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        doors = GameObject.FindGameObjectsWithTag("Door");
+        doors = GameObject.FindGameObjectsWithTag("doors");
     }
 
     // Update is called once per frame
     void Update()
     {
+		if(doors.Length == 0)
+		{
+			doors = GameObject.FindGameObjectsWithTag("doors");
+		}
         foreach (GameObject d in doors)
         {
             var sprite = d.transform.FindChild("ExitIcon").gameObject;
-            sprite.SetActive(false);
+			if (sprite != null)
+			{
+				sprite.SetActive(false);
+			}
         }
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -27,12 +34,15 @@ public class ExitScript : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo))
         {
             GameObject hitObject = hitInfo.transform.root.gameObject;
-            if (hitObject.tag == "Door")
+            if (hitObject.tag == "doors")
             {
-                var sprite = hitObject.transform.FindChild("ExitIcon").gameObject;
-                sprite.SetActive(true);
+				if (hitInfo.distance < 10)
+				{
+					var sprite = hitObject.transform.FindChild("ExitIcon").gameObject;
+					sprite.SetActive(true);
+				}
             }
-			if (hitObject.tag == "Door" && Input.GetKeyDown (KeyCode.Return)) {
+			if (hitObject.tag == "doors" && Input.GetKeyDown (KeyCode.Return)) {
 
 				var j2s = hitObject.GetComponent<JumpToScene> ();
 				SceneManager.LoadScene (j2s.scene);
