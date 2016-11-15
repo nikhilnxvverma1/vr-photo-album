@@ -6,5 +6,6 @@ public class Album {
 	public string path;
 	public Photo [] photoList;
 	public string audio;
+	public Sprite[] slides;
 
 }

@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: f6c38842820d1482e9324b1dddfcd00a
+timeCreated: 1479057531
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Box04
+    100002: Box09
+    100004: Box10
+    100006: Cloth_Sha0
+    100008: Cloth_Shap
+    100010: dlhy diel
+    100012: lava opie0
+    100014: lava opier
+    100016: nozicka
+    100018: nozicka01
+    100020: nozicka02
+    100022: nozicka03
+    100024: nozicka04
+    100026: nozicka05
+    100028: nozicka06
+    100030: nozicka07
+    100032: opierka
+    100034: opierka0
+    100036: opierka1
+    100038: sedacka na
+    100040: sedak
+    100042: sedak0
+    100044: //RootNode
+    100046: telo
+    100048: vankus
+    100050: vankus0
+    100052: vankus1
+    400000: Box04
+    400002: Box09
+    400004: Box10
+    400006: Cloth_Sha0
+    400008: Cloth_Shap
+    400010: dlhy diel
+    400012: lava opie0
+    400014: lava opier
+    400016: nozicka
+    400018: nozicka01
+    400020: nozicka02
+    400022: nozicka03
+    400024: nozicka04
+    400026: nozicka05
+    400028: nozicka06
+    400030: nozicka07
+    400032: opierka
+    400034: opierka0
+    400036: opierka1
+    400038: sedacka na
+    400040: sedak
+    400042: sedak0
+    400044: //RootNode
+    400046: telo
+    400048: vankus
+    400050: vankus0
+    400052: vankus1
+    2300000: Box04
+    2300002: Box09
+    2300004: Box10
+    2300006: Cloth_Sha0
+    2300008: Cloth_Shap
+    2300010: dlhy diel
+    2300012: lava opie0
+    2300014: lava opier
+    2300016: nozicka
+    2300018: nozicka01
+    2300020: nozicka02
+    2300022: nozicka03
+    2300024: nozicka04
+    2300026: nozicka05
+    2300028: nozicka06
+    2300030: nozicka07
+    2300032: opierka
+    2300034: opierka0
+    2300036: opierka1
+    2300038: sedak
+    2300040: sedak0
+    2300042: telo
+    2300044: vankus
+    2300046: vankus0
+    2300048: vankus1
+    3300000: Box04
+    3300002: Box09
+    3300004: Box10
+    3300006: Cloth_Sha0
+    3300008: Cloth_Shap
+    3300010: dlhy diel
+    3300012: lava opie0
+    3300014: lava opier
+    3300016: nozicka
+    3300018: nozicka01
+    3300020: nozicka02
+    3300022: nozicka03
+    3300024: nozicka04
+    3300026: nozicka05
+    3300028: nozicka06
+    3300030: nozicka07
+    3300032: opierka
+    3300034: opierka0
+    3300036: opierka1
+    3300038: sedak
+    3300040: sedak0
+    3300042: telo
+    3300044: vankus
+    3300046: vankus0
+    3300048: vankus1
+    4300000: telo
+    4300002: Box04
+    4300004: Box09
+    4300006: Box10
+    4300008: sedak
+    4300010: sedak0
+    4300012: opierka
+    4300014: opierka0
+    4300016: opierka1
+    4300018: lava opier
+    4300020: vankus
+    4300022: vankus0
+    4300024: vankus1
+    4300026: dlhy diel
+    4300028: nozicka
+    4300030: nozicka01
+    4300032: nozicka02
+    4300034: nozicka03
+    4300036: nozicka04
+    4300038: nozicka05
+    4300040: nozicka06
+    4300042: nozicka07
+    4300044: Cloth_Shap
+    4300046: Cloth_Sha0
+    4300048: lava opie0
+    6400000: Box04
+    6400002: Box09
+    6400004: Box10
+    6400006: Cloth_Sha0
+    6400008: Cloth_Shap
+    6400010: dlhy diel
+    6400012: lava opie0
+    6400014: lava opier
+    6400016: nozicka
+    6400018: nozicka01
+    6400020: nozicka02
+    6400022: nozicka03
+    6400024: nozicka04
+    6400026: nozicka05
+    6400028: nozicka06
+    6400030: nozicka07
+    6400032: opierka
+    6400034: opierka0
+    6400036: opierka1
+    6400038: sedak
+    6400040: sedak0
+    6400042: telo
+    6400044: vankus
+    6400046: vankus0
+    6400048: vankus1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

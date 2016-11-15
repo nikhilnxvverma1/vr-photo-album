@@ -10,6 +10,34 @@ public class DataScan : MonoBehaviour {
 	public static Album currentAlbum;
 	public static OS_TYPE OS;
 	public enum OS_TYPE{MAC,WINDOWS};
+	private int width = 320;				// width and height for slideshow sprites
+	private int height = 240;
+	public int index;
+
+	private void LoadSprites(Album album){
+		var slides = new Sprite[album.photoList.Length];
+		for (int i = 0; i < album.photoList.Length; i++) {
+			var tex = ScaleTexture (album.photoList [i].texture, width, height);
+			slides [i] = Sprite.Create (tex, new Rect (0, 0, width, height), 
+				new Vector2 (0.5f, 0.0f), 1.0f);
+		}
+		album.slides = slides;
+	}
+
+	private static Texture2D ScaleTexture(Texture2D source,int targetWidth,int targetHeight) {
+		Texture2D result=new Texture2D(targetWidth,targetHeight,source.format,true);
+		Color[] rpixels=result.GetPixels(0);
+		float incX=((float)1/source.width)*((float)source.width/targetWidth);
+		float incY=((float)1/source.height)*((float)source.height/targetHeight);
+		for(int px=0; px<rpixels.Length; px++) {
+			rpixels[px] = source.GetPixelBilinear(incX*((float)px%targetWidth),
+				incY*((float)Mathf.Floor(px/targetWidth)));
+		}
+		result.SetPixels(rpixels,0);
+		result.Apply();
+		return result;
+	}
+
 
 	// Use this for initialization
 	void Start () {
@@ -109,6 +137,7 @@ public class DataScan : MonoBehaviour {
 				album.photoList [i].description = "";
 			}
 		}
+		LoadSprites (album);
 	}
 	// Update is called once per frame
 	void Update () {
