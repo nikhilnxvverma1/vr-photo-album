@@ -11,7 +11,7 @@ public class Tilemap : MonoBehaviour {
 	void Start () {
 //		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
 
-		Album album=GenerateFictitiousAlbum(100);
+		Album album=GenerateFictitiousAlbum(20);
 		double maxFrameWidth=TileLength*1.5;
 		double maxFrameHeight=TileLength;
 		ImageBank imageBank=new ImageBank(album,maxFrameWidth,maxFrameHeight);
@@ -102,10 +102,10 @@ public class Tilemap : MonoBehaviour {
 				floorObject.transform.Rotate(0,AngleFor(tile.floor.direction),0,Space.Self);
 
 				//load Ceiling prefab
-//				string ceilingPath=containerPath+"Ceiling/"+Ceiling.StringFor(tile.ceiling.type);
-//				GameObject ceilingObject=Instantiate(Resources.Load(ceilingPath,typeof(GameObject))) as GameObject;
-//				ceilingObject.transform.position=new Vector3(startX+j*TileLength,0,startY+i*TileLength);
-//				ceilingObject.transform.Rotate(0,AngleFor(tile.ceiling.direction),0);
+				string ceilingPath=containerPath+"Ceiling/"+Ceiling.StringFor(tile.ceiling.type);
+				GameObject ceilingObject=Instantiate(Resources.Load(ceilingPath,typeof(GameObject))) as GameObject;
+				ceilingObject.transform.position=new Vector3(startX+j*TileLength,0,startY+i*TileLength);
+				ceilingObject.transform.Rotate(0,AngleFor(tile.ceiling.direction),0);
 				
 			}
 		}		
