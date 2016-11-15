@@ -54,8 +54,8 @@ public class Room {
 		int l=Units(largestImageContainerWidth,unitWidth);
 
 		bool randomizeWidth=(Random.value>0.5);
-		int min=4;
-		int max=6;
+		int min=6;
+		int max=12;
 		if(randomizeWidth){
 			width=Random.Range(l,LargestWidth+1);
 			height=(p-2*width)/2+ Random.Range(min,max);

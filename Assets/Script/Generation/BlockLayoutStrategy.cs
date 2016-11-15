@@ -177,7 +177,7 @@ public class BlockLayoutStrategy: LayoutStrategy{
 		}
 
 		// combine and divide moving backward and moving forward
-		movingBack.DivideByIntroducingNewHeight(heightLevel.rowHeight+room.height,room.column,room.width,movingBack);
+		movingBack.DivideByIntroducingNewHeight(heightLevel.rowHeight+room.height,room.column,room.width,movingForward);
 		return start;	//start will almost never change because we modify the start not change it.
 	}
 
