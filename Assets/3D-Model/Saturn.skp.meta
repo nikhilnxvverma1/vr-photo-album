@@ -1,0 +1,339 @@
+fileFormatVersion: 2
+guid: 10b9aedbde0fc4eef9d814d5c08686ce
+timeCreated: 1479328035
+licenseType: Free
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000530000005400000055000000560000005700000058000000590000005a0000005b0000005c0000005d0000005e0000005f000000600000006100000062000000630000006400000065000000660000006700000068000000690000006a0000006b0000006c0000006d0000006e0000006f000000700000007100000072000000730000007400000075000000760000007700000078000000790000007a000000
+  assetHash:
+    serializedVersion: 2
+    Hash: 316670a193e772ea5929b23d0974927e
+  longitude: -105.283
+  latitude: 40.017
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: 68.07332, y: 20.221033, z: -33.065594}
+      lookAt: {x: 0.2686368, y: -4.2145734, z: 0.988495}
+      up: {x: -0.4430394, y: 0.8554022, z: -0.26833415}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Component#1
+    100002: Component#1 1
+    100004: Component#1 10
+    100006: Component#1 11
+    100008: Component#1 12
+    100010: Component#1 13
+    100012: Component#1 14
+    100014: Component#1 15
+    100016: Component#1 16
+    100018: Component#1 17
+    100020: Component#1 18
+    100022: Component#1 19
+    100024: Component#1 2
+    100026: Component#1 20
+    100028: Component#1 21
+    100030: Component#1 22
+    100032: Component#1 23
+    100034: Component#1 24
+    100036: Component#1 25
+    100038: Component#1 26
+    100040: Component#1 27
+    100042: Component#1 28
+    100044: Component#1 29
+    100046: Component#1 3
+    100048: Component#1 30
+    100050: Component#1 31
+    100052: Component#1 32
+    100054: Component#1 33
+    100056: Component#1 34
+    100058: Component#1 35
+    100060: Component#1 36
+    100062: Component#1 37
+    100064: Component#1 38
+    100066: Component#1 39
+    100068: Component#1 4
+    100070: Component#1 40
+    100072: Component#1 41
+    100074: Component#1 42
+    100076: Component#1 43
+    100078: Component#1 44
+    100080: Component#1 45
+    100082: Component#1 46
+    100084: Component#1 47
+    100086: Component#1 48
+    100088: Component#1 49
+    100090: Component#1 5
+    100092: Component#1 50
+    100094: Component#1 51
+    100096: Component#1 52
+    100098: Component#1 53
+    100100: Component#1 54
+    100102: Component#1 55
+    100104: Component#1 56
+    100106: Component#1 57
+    100108: Component#1 58
+    100110: Component#1 59
+    100112: Component#1 6
+    100114: Component#1 7
+    100116: Component#1 8
+    100118: Component#1 9
+    100120: //RootNode
+    100122: Saturn 1
+    400000: Component#1
+    400002: Component#1 1
+    400004: Component#1 10
+    400006: Component#1 11
+    400008: Component#1 12
+    400010: Component#1 13
+    400012: Component#1 14
+    400014: Component#1 15
+    400016: Component#1 16
+    400018: Component#1 17
+    400020: Component#1 18
+    400022: Component#1 19
+    400024: Component#1 2
+    400026: Component#1 20
+    400028: Component#1 21
+    400030: Component#1 22
+    400032: Component#1 23
+    400034: Component#1 24
+    400036: Component#1 25
+    400038: Component#1 26
+    400040: Component#1 27
+    400042: Component#1 28
+    400044: Component#1 29
+    400046: Component#1 3
+    400048: Component#1 30
+    400050: Component#1 31
+    400052: Component#1 32
+    400054: Component#1 33
+    400056: Component#1 34
+    400058: Component#1 35
+    400060: Component#1 36
+    400062: Component#1 37
+    400064: Component#1 38
+    400066: Component#1 39
+    400068: Component#1 4
+    400070: Component#1 40
+    400072: Component#1 41
+    400074: Component#1 42
+    400076: Component#1 43
+    400078: Component#1 44
+    400080: Component#1 45
+    400082: Component#1 46
+    400084: Component#1 47
+    400086: Component#1 48
+    400088: Component#1 49
+    400090: Component#1 5
+    400092: Component#1 50
+    400094: Component#1 51
+    400096: Component#1 52
+    400098: Component#1 53
+    400100: Component#1 54
+    400102: Component#1 55
+    400104: Component#1 56
+    400106: Component#1 57
+    400108: Component#1 58
+    400110: Component#1 59
+    400112: Component#1 6
+    400114: Component#1 7
+    400116: Component#1 8
+    400118: Component#1 9
+    400120: //RootNode
+    400122: Saturn 1
+    2300000: Component#1
+    2300002: Component#1 1
+    2300004: Component#1 10
+    2300006: Component#1 11
+    2300008: Component#1 12
+    2300010: Component#1 13
+    2300012: Component#1 14
+    2300014: Component#1 15
+    2300016: Component#1 16
+    2300018: Component#1 17
+    2300020: Component#1 18
+    2300022: Component#1 19
+    2300024: Component#1 2
+    2300026: Component#1 20
+    2300028: Component#1 21
+    2300030: Component#1 22
+    2300032: Component#1 23
+    2300034: Component#1 24
+    2300036: Component#1 25
+    2300038: Component#1 26
+    2300040: Component#1 27
+    2300042: Component#1 28
+    2300044: Component#1 29
+    2300046: Component#1 3
+    2300048: Component#1 30
+    2300050: Component#1 31
+    2300052: Component#1 32
+    2300054: Component#1 33
+    2300056: Component#1 34
+    2300058: Component#1 35
+    2300060: Component#1 36
+    2300062: Component#1 37
+    2300064: Component#1 38
+    2300066: Component#1 39
+    2300068: Component#1 4
+    2300070: Component#1 40
+    2300072: Component#1 41
+    2300074: Component#1 42
+    2300076: Component#1 43
+    2300078: Component#1 44
+    2300080: Component#1 45
+    2300082: Component#1 46
+    2300084: Component#1 47
+    2300086: Component#1 48
+    2300088: Component#1 49
+    2300090: Component#1 5
+    2300092: Component#1 50
+    2300094: Component#1 51
+    2300096: Component#1 52
+    2300098: Component#1 53
+    2300100: Component#1 54
+    2300102: Component#1 55
+    2300104: Component#1 56
+    2300106: Component#1 57
+    2300108: Component#1 58
+    2300110: Component#1 59
+    2300112: Component#1 6
+    2300114: Component#1 7
+    2300116: Component#1 8
+    2300118: Component#1 9
+    2300120: Saturn 1
+    3300000: Component#1
+    3300002: Component#1 1
+    3300004: Component#1 10
+    3300006: Component#1 11
+    3300008: Component#1 12
+    3300010: Component#1 13
+    3300012: Component#1 14
+    3300014: Component#1 15
+    3300016: Component#1 16
+    3300018: Component#1 17
+    3300020: Component#1 18
+    3300022: Component#1 19
+    3300024: Component#1 2
+    3300026: Component#1 20
+    3300028: Component#1 21
+    3300030: Component#1 22
+    3300032: Component#1 23
+    3300034: Component#1 24
+    3300036: Component#1 25
+    3300038: Component#1 26
+    3300040: Component#1 27
+    3300042: Component#1 28
+    3300044: Component#1 29
+    3300046: Component#1 3
+    3300048: Component#1 30
+    3300050: Component#1 31
+    3300052: Component#1 32
+    3300054: Component#1 33
+    3300056: Component#1 34
+    3300058: Component#1 35
+    3300060: Component#1 36
+    3300062: Component#1 37
+    3300064: Component#1 38
+    3300066: Component#1 39
+    3300068: Component#1 4
+    3300070: Component#1 40
+    3300072: Component#1 41
+    3300074: Component#1 42
+    3300076: Component#1 43
+    3300078: Component#1 44
+    3300080: Component#1 45
+    3300082: Component#1 46
+    3300084: Component#1 47
+    3300086: Component#1 48
+    3300088: Component#1 49
+    3300090: Component#1 5
+    3300092: Component#1 50
+    3300094: Component#1 51
+    3300096: Component#1 52
+    3300098: Component#1 53
+    3300100: Component#1 54
+    3300102: Component#1 55
+    3300104: Component#1 56
+    3300106: Component#1 57
+    3300108: Component#1 58
+    3300110: Component#1 59
+    3300112: Component#1 6
+    3300114: Component#1 7
+    3300116: Component#1 8
+    3300118: Component#1 9
+    3300120: Saturn 1
+    4300000: Mesh Component#1
+    4300002: Mesh Saturn
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
