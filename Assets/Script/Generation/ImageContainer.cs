@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class ImageContainer {
+	public Tile startTile;
+	public Tile endTile;
 	Photo photo;
 	double normalizedWidth;
 	double normalizedHeight;
@@ -9,6 +11,11 @@ public class ImageContainer {
 	double y;
 	GameObject photoFrame;
 	ImageContainer next=null;
+
+	public ImageContainer(Tile start,Tile end){
+		this.startTile=start;
+		this.endTile=end;
+	}
 
 	public ImageContainer(Photo photo,double normalizedWidth,double normalizedHeight){
 		this.photo=photo;

@@ -2,6 +2,9 @@
 
 public class Tile {
 
+	public float x;
+	public float y;
+	public ImageContainer imageContainer;
 	public Floor floor;
 	public Prop prop;
 	public Ceiling ceiling;

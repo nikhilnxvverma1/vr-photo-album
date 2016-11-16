@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class Tilemap : MonoBehaviour {
 
 	const float TileLength=2;
 	int rows,columns;	
 
+	public GameObject picturePrefab;
 	Tile [][] tileGrid;	
 
 	// Use this for initialization
@@ -81,13 +83,6 @@ public class Tilemap : MonoBehaviour {
 
 		float startX=0;
 		float startY=0;
-		//insert the art gallery entry (which contains the player)
-		//the art gallery is a 3 X 4 tile prefab which should be placed before the
-		//generated art gallery
-		// string entryPath=containerPath+"ArtGalleryEntry";
-		// GameObject entryObject=Instantiate(Resources.Load(entryPath,typeof(GameObject))) as GameObject;
-		// entryObject.transform.position=new Vector3(startX-1.5f*TileLength,startY-4*TileLength,0);
-		// entryObject.transform.Rotate(0,0,0,Space.Self);
 
 		for(int i=0;i<rows;i++){
 			for(int j=0;j<columns;j++){
@@ -95,20 +90,150 @@ public class Tilemap : MonoBehaviour {
 					continue;
 				}
 				Tile tile=tileGrid[i][j];
+				tile.x=startX+j*TileLength;
+				tile.y=startY+i*TileLength;
 				//load Floor prefab
 				string floorPath=containerPath+"Floor/"+Floor.StringFor(tile.floor.type);
 				GameObject floorObject=Instantiate(Resources.Load(floorPath,typeof(GameObject))) as GameObject;
-				floorObject.transform.position=new Vector3(startX+j*TileLength,0,startY+i*TileLength);
+				floorObject.transform.position=new Vector3(tile.x,0,tile.y);
 				floorObject.transform.Rotate(0,AngleFor(tile.floor.direction),0,Space.Self);
 
 				//load Ceiling prefab
 				string ceilingPath=containerPath+"Ceiling/"+Ceiling.StringFor(tile.ceiling.type);
 				GameObject ceilingObject=Instantiate(Resources.Load(ceilingPath,typeof(GameObject))) as GameObject;
-				ceilingObject.transform.position=new Vector3(startX+j*TileLength,0,startY+i*TileLength);
+				ceilingObject.transform.position=new Vector3(tile.x,0,tile.y);
 				ceilingObject.transform.Rotate(0,AngleFor(tile.ceiling.direction),0);
 				
 			}
 		}		
+
+		//make image containers by looking for continious walls and doors
+		List<ImageContainer> imageContainerList=MakeImageContainers();
+
+		//go throught each image container and make a prefab at those positions
+		PlacePhotosIn(imageContainerList);
+	}
+
+	private void PlacePhotosIn(List<ImageContainer> list){
+		if(list.Count==0){
+			return;
+		}
+		foreach(ImageContainer imageContainer in list){
+			//compute the x and y that lies in the middle of the spanning tiles
+			double x=(imageContainer.startTile.x+imageContainer.endTile.x)/2;
+			double y=(imageContainer.startTile.y+imageContainer.endTile.y)/2;
+			// load the prefab and place it here
+			GameObject pictureFrame=(GameObject)Object.Instantiate(picturePrefab,new Vector3((float)x,0,(float)y),Quaternion.identity);
+			PictureInfo pictureInfo=pictureFrame.GetComponent<PictureInfo>();
+			Destroy(pictureInfo);
+		}
+
+	}
+
+	private List<ImageContainer> MakeImageContainers(){
+		List<ImageContainer> imageContainerList=new List<ImageContainer>();
+		for(int i=0;i<rows;i++){
+			for(int j=0;j<columns;j++){
+
+				//look for walls or corners of same angle
+				Tile tile=tileGrid[i][j];
+				if(tile==null||tile.imageContainer!=null){
+					continue;
+				}
+				//depending on the angle, check the adjacent tiles
+				Tile before=null;
+				Tile after=null;
+				if(tile.floor.direction==Direction.North||tile.floor.direction==Direction.South){
+					//check for tiles above and below
+
+					if(i>0){
+						before=tileGrid[i-1][j];
+					}
+					if(i<rows-1){
+						after=tileGrid[i+1][j];
+					}
+				}else{
+					//check for tiles left and right
+					if(j>0){
+						before=tileGrid[i][j-1];
+					}
+					if(j<columns-1){
+						after=tileGrid[i][j+1];
+					}
+				}
+				if(before!=null && before.imageContainer==null && FacingSameDirection(tile,before)){
+					ImageContainer imageContainer=new ImageContainer(before,tile);				
+					before.imageContainer=imageContainer;
+					tile.imageContainer=imageContainer;
+					imageContainerList.Add(imageContainer);
+				}else if(after!=null && after.imageContainer==null && FacingSameDirection(after,tile)){
+					ImageContainer imageContainer=new ImageContainer(tile,after);				
+					after.imageContainer=imageContainer;
+					tile.imageContainer=imageContainer;
+					imageContainerList.Add(imageContainer);
+				}
+			}
+		}
+		return imageContainerList;
+	}
+
+	private bool FacingSameDirection(Tile tile1,Tile tile2){
+		if(tile1.floor.type==FloorType.Wall && tile2.floor.type==FloorType.Wall){
+			return tile1.floor.direction==tile2.floor.direction;
+		}else if(tile1.floor.type==FloorType.Wall && tile2.floor.type==FloorType.Corner){
+			return ((tile1.floor.direction==NextDirection(tile2.floor.direction)) ||
+				(tile1.floor.direction==PreviousDirection(tile2.floor.direction)));
+		}else if(tile1.floor.type==FloorType.Corner && tile2.floor.type==FloorType.Wall){
+			return ((tile2.floor.direction==NextDirection(tile1.floor.direction)) ||
+				(tile2.floor.direction==PreviousDirection(tile1.floor.direction)));
+		}
+		return false;
+	}
+
+	private Direction NextDirection(Direction direction){
+		switch(direction){
+			case Direction.North:
+				return Direction.East;
+			case Direction.East:
+				return Direction.South;
+			case Direction.South:
+				return Direction.West;
+			case Direction.West:
+				return Direction.North;
+			default:
+				return Direction.North;
+		}
+	}
+
+	private Direction PreviousDirection(Direction direction){
+		switch(direction){
+		case Direction.North:
+			return Direction.West;
+		case Direction.East:
+			return Direction.North;
+		case Direction.South:
+			return Direction.East;
+		case Direction.West:
+			return Direction.South;
+		default:
+			return Direction.North;
+		}
+	}
+
+	private int NextTileAngle(int tileAngle){
+		if(tileAngle<270){
+			return tileAngle+90;
+		}else{
+			return 0;
+		}
+	}
+
+	private int PreviousTileAngle(int tileAngle){
+		if(tileAngle>0){
+			return tileAngle-90;
+		}else{
+			return 270;
+		}
 	}
 
 	private void ReadTileMapFile(string path){
