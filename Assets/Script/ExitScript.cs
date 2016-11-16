@@ -22,10 +22,16 @@ public class ExitScript : MonoBehaviour
         foreach (GameObject d in doors)
         {
             var sprite = d.transform.FindChild("ExitIcon").gameObject;
-			if (sprite != null)
+            var label = d.transform.FindChild("Label").gameObject;
+            
+            if (sprite != null)
 			{
 				sprite.SetActive(false);
 			}
+            if (label != null)
+            {
+                label.SetActive(false);
+            }
         }
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -39,8 +45,16 @@ public class ExitScript : MonoBehaviour
 				if (hitInfo.distance < 10)
 				{
 					var sprite = hitObject.transform.FindChild("ExitIcon").gameObject;
-					sprite.SetActive(true);
-				}
+                    if (sprite != null)
+                    {
+                        sprite.SetActive(true);
+                    }
+                    var label = hitObject.transform.FindChild("Label").gameObject;
+                    if (label != null)
+                    {
+                        label.SetActive(true);
+                    }
+                }
             }
 			if (hitObject.tag == "doors" && Input.GetKeyDown (KeyCode.Return)) {
 
