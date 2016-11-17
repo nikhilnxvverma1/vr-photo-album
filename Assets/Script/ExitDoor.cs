@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Select : MonoBehaviour {
@@ -86,7 +87,7 @@ public class Select : MonoBehaviour {
 	}
 	public void ChangeScene(string sceneName){
 		Debug.Log ("change scene");
-				Application.LoadLevel (sceneName);
+        SceneManager.LoadScene(sceneName);
 	}
 
 	public void Mouseover(){

@@ -21,7 +21,6 @@ public class CreatePhotoPlane : MonoBehaviour
 		//byte[] image = System.IO.File.ReadAllBytes(System.IO.Directory.GetCurrentDirectory() + string.Format(@"{0}Assets{1}Starsinthesky.jpg",slash,slash));
 		//Texture2D t2 = new Texture2D(3877, 2842);
 		//t2.LoadImage(image);
-		var albums = DataScan.rootModel.albumList;
 		var curAlbum = DataScan.currentAlbum;
 		var photoList = ShufflePhotos(curAlbum.photoList);
 		_photos = new List<GameObject>();

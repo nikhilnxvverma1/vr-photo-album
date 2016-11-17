@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 
 public class PlayMusic : MonoBehaviour {
@@ -11,14 +10,8 @@ public class PlayMusic : MonoBehaviour {
 	void Start () {
 		if (!AudioBegin)
 		{
-			Debug.Log("Trying to play music: " + DataScan.currentAlbum.audio);
 			AudioSource audio = GetComponent<AudioSource>();
-			var c = AssetDatabase.LoadAssetAtPath(DataScan.currentAlbum.audio, typeof(AudioClip)) as AudioClip;
-			if (c == null)
-			{
-				Debug.Log("Trying to play music: " + DataScan.currentAlbum.audio);
-
-			}
+			var c = Resources.Load("LobbyMusic", typeof(AudioClip)) as AudioClip;
 			audio.clip = c;
 			if (isEnabled) audio.Play();
 			DontDestroyOnLoad(this.gameObject);

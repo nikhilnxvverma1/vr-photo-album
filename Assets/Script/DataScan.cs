@@ -50,6 +50,7 @@ public class DataScan : MonoBehaviour {
 			OS = OS_TYPE.WINDOWS;
 		else
 			OS = OS_TYPE.MAC;
+        DontDestroyOnLoad(gameObject);
 //		printRootModel ();
 	}
 	public static void printRootModel(){
