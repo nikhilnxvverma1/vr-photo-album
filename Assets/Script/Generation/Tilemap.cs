@@ -118,18 +118,19 @@ public class Tilemap : MonoBehaviour {
 		if(list.Count==0){
 			return;
 		}
-		float tileWidth=TileLength;
-		float tileHeight=2*TileLength;
+
 		int pictureIndex=0;
 		foreach(ImageContainer imageContainer in list){
 			//compute the x and y that lies in the middle of the spanning tiles
-			double x=(imageContainer.startTile.x+imageContainer.endTile.x)/2;
-			double y=(imageContainer.startTile.y+imageContainer.endTile.y)/2;
+			float x=(imageContainer.startTile.x+imageContainer.endTile.x)/2;
+			float y=(imageContainer.startTile.y+imageContainer.endTile.y)/2;
 			Direction direction=GetCommonDirection(imageContainer.startTile,imageContainer.endTile);
 			float angle=AngleFor(direction);
 			// load the prefab and place it here
-			GameObject pictureFrame=(GameObject)Object.Instantiate(picturePrefab,new Vector3((float)x,tileHeight/2,(float)y),Quaternion.AngleAxis(angle,Vector3.up));
+			GameObject pictureFrame=(GameObject)Object.Instantiate(picturePrefab,StuckOnWall(direction,x,y),Quaternion.AngleAxis(angle,Vector3.up));
 			PictureInfo pictureInfo=pictureFrame.GetComponent<PictureInfo>();
+//			pictureInfo.transform.localScale.x*=0.5f;
+//			pictureInfo.transform.localScale.y*=0.5f;
 			pictureInfo.pictureIndex=pictureIndex++;
 		
 			if(pictureIndex>=DataScan.currentAlbum.photoList.Length){
@@ -137,6 +138,23 @@ public class Tilemap : MonoBehaviour {
 			}
 		}
 
+	}
+
+	private Vector3 StuckOnWall(Direction direction,float x,float y){		
+		float tileHeight=2*TileLength;
+		float shift=TileLength/3;
+		switch(direction){
+		case Direction.North:
+			return new Vector3((float)x,tileHeight/2,(float)y-shift);
+		case Direction.East:
+			return new Vector3((float)x-shift,tileHeight/2,(float)y);
+		case Direction.South:
+			return new Vector3((float)x,tileHeight/2,(float)y+shift);
+		case Direction.West:
+			return new Vector3((float)x+shift,tileHeight/2,(float)y);
+		}
+
+		return new Vector3((float)x,tileHeight/2,(float)y);
 	}
 
 	private List<ImageContainer> MakeImageContainers(){
