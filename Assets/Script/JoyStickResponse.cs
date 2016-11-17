@@ -12,7 +12,7 @@ public class JoyStickResponse : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape) || 
+		if (Input.GetKeyDown (KeyCode.Backspace) || 
 			(DataScan.OS == DataScan.OS_TYPE.WINDOWS && Input.GetKeyDown ("joystick button 6")) ||
 			(DataScan.OS == DataScan.OS_TYPE.MAC && Input.GetKeyDown ("joystick button 10"))){
 			Debug.Log ("Back Button detected Taking to Tutorial Scene");
