@@ -97,7 +97,9 @@ public class GenerateLobby : MonoBehaviour {
 			GameObject curSlideshow = (GameObject)Instantiate(slideshow, new Vector3(26.2f, 10.2f, pos), Quaternion.Euler(new Vector3(0, 90, 0)));
 			var slideScript = curSlideshow.GetComponent<SlideShow>();
 			slideScript.index = i+size;
-		}
+            var jumpToScript = curDoor.GetComponent<JumpToScene>();
+            jumpToScript.scene = "ArtGallery";
+        }
 	}
 	
 	// Update is called once per frame
