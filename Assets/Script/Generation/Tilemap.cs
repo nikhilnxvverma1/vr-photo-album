@@ -118,14 +118,23 @@ public class Tilemap : MonoBehaviour {
 		if(list.Count==0){
 			return;
 		}
+		float tileWidth=TileLength;
+		float tileHeight=2*TileLength;
+		int pictureIndex=0;
 		foreach(ImageContainer imageContainer in list){
 			//compute the x and y that lies in the middle of the spanning tiles
 			double x=(imageContainer.startTile.x+imageContainer.endTile.x)/2;
 			double y=(imageContainer.startTile.y+imageContainer.endTile.y)/2;
+			Direction direction=GetCommonDirection(imageContainer.startTile,imageContainer.endTile);
+			float angle=AngleFor(direction);
 			// load the prefab and place it here
-			GameObject pictureFrame=(GameObject)Object.Instantiate(picturePrefab,new Vector3((float)x,0,(float)y),Quaternion.identity);
+			GameObject pictureFrame=(GameObject)Object.Instantiate(picturePrefab,new Vector3((float)x,tileHeight/2,(float)y),Quaternion.AngleAxis(angle,Vector3.up));
 			PictureInfo pictureInfo=pictureFrame.GetComponent<PictureInfo>();
-			Destroy(pictureInfo);
+			pictureInfo.pictureIndex=pictureIndex++;
+		
+			if(pictureIndex>=DataScan.currentAlbum.photoList.Length){
+				break;
+			}
 		}
 
 	}
@@ -143,7 +152,7 @@ public class Tilemap : MonoBehaviour {
 				//depending on the angle, check the adjacent tiles
 				Tile before=null;
 				Tile after=null;
-				if(tile.floor.direction==Direction.North||tile.floor.direction==Direction.South){
+				if(tile.floor.direction==Direction.East||tile.floor.direction==Direction.West){
 					//check for tiles above and below
 
 					if(i>0){
@@ -175,6 +184,18 @@ public class Tilemap : MonoBehaviour {
 			}
 		}
 		return imageContainerList;
+	}
+
+	public Direction GetCommonDirection(Tile tile1,Tile tile2){
+		
+		if(tile1.floor.type==FloorType.Wall && tile2.floor.type==FloorType.Wall){
+			return tile1.floor.direction;
+		}else if(tile1.floor.type==FloorType.Wall && tile2.floor.type==FloorType.Corner){
+			return tile1.floor.direction;				
+		}else if(tile1.floor.type==FloorType.Corner && tile2.floor.type==FloorType.Wall){
+			return tile2.floor.direction;
+		}
+		return Direction.North;
 	}
 
 	private bool FacingSameDirection(Tile tile1,Tile tile2){

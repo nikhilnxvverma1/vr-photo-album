@@ -34,5 +34,4 @@ public class ImageContainer {
 	public ImageContainer getNext(){
 		return next;
 	}
-
 }

@@ -9,7 +9,7 @@ public class PictureInfo : MonoBehaviour {
 	public SpriteRenderer sp;
 	// Use this for initialization
 	void Start () {
-		var photo = DataScan.rootModel.albumList[1].photoList [pictureIndex];
+		var photo = DataScan.currentAlbum.photoList [pictureIndex];
 		sp = GetComponent<SpriteRenderer> ();
 //		var tex = ScaleTexture (photo.texture, width, height);	
 		var tex = photo.texture;
