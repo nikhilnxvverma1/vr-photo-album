@@ -8,11 +8,12 @@ public class MovingObject : MonoBehaviour {
 	public float x, y, z;
 	// Use this for initialization
 	void Start () {
-
+		angle = 45;
 	}
 
 	// Update is called once per frame
 	void Update () {
+		
 		angle += speed*Time.deltaTime; //if you want to switch direction, use -= instead of +=
 		x = Mathf.Cos(angle)*radius;
 		y = Mathf.Sin(angle)*radius;
