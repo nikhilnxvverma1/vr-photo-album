@@ -21,17 +21,27 @@ public class ExitScript : MonoBehaviour
 		}
         foreach (GameObject d in doors)
         {
-            var sprite = d.transform.FindChild("ExitIcon").gameObject;
-            var label = d.transform.FindChild("Label").gameObject;
-            
-            if (sprite != null)
-			{
-				sprite.SetActive(false);
+            var spriteObject = d.transform.FindChild("ExitIcon");
+            var labelObject = d.transform.FindChild("Label");
+			GameObject sprite;
+			GameObject label;
+			if (spriteObject != null) {
+				sprite = spriteObject.gameObject;
+				if (sprite != null)
+				{
+					sprite.SetActive(false);
+				}
 			}
-            if (label != null)
-            {
-                label.SetActive(false);
-            }
+			if (labelObject != null) {
+				label = labelObject.gameObject;
+				if (label != null)
+				{
+					label.SetActive(false);
+				}
+			}
+
+
+
         }
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -44,16 +54,24 @@ public class ExitScript : MonoBehaviour
             {
 				if (hitInfo.distance < 10)
 				{
-					var sprite = hitObject.transform.FindChild("ExitIcon").gameObject;
-                    if (sprite != null)
-                    {
-                        sprite.SetActive(true);
-                    }
-                    var label = hitObject.transform.FindChild("Label").gameObject;
-                    if (label != null)
-                    {
-                        label.SetActive(true);
-                    }
+					var spriteObject = hitObject.transform.FindChild("ExitIcon");
+					var labelObject = hitObject.transform.FindChild("Label");
+					GameObject sprite;
+					GameObject label;
+					if (spriteObject != null) {
+						sprite = spriteObject.gameObject;
+						if (sprite != null)
+						{
+							sprite.SetActive(true);
+						}
+					}
+					if (labelObject != null) {
+						label = labelObject.gameObject;
+						if (label != null)
+						{
+							label.SetActive(true);
+						}
+					}
                 }
             }
 			if (hitObject.tag == "doors" && Input.GetKeyDown (KeyCode.Return)) {
