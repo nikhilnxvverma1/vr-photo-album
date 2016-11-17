@@ -6,6 +6,7 @@ public class ExitScript : MonoBehaviour
 {
 
     private GameObject[] doors;
+	public float distance = 10;
     // Use this for initialization
     void Start()
     {
@@ -52,7 +53,7 @@ public class ExitScript : MonoBehaviour
             GameObject hitObject = hitInfo.transform.root.gameObject;
             if (hitObject.tag == "doors")
             {
-				if (hitInfo.distance < 10)
+				if (hitInfo.distance < distance)
 				{
 					var spriteObject = hitObject.transform.FindChild("ExitIcon");
 					var labelObject = hitObject.transform.FindChild("Label");
