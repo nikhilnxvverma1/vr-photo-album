@@ -119,9 +119,22 @@ public class Tilemap : MonoBehaviour {
 		if(list.Count==0){
 			return;
 		}
-
+			
+		//if we have more image containers than the available images than we skip a few image containers 
+		//this is important because otherwise all the images will be concenterated on the first few rows
+		float abundanceRatio=list.Count/DataScan.currentAlbum.photoList.Length;
+		float abundance=0;
 		int pictureIndex=0;
 		foreach(ImageContainer imageContainer in list){
+
+			//we skip this image container 
+			if(abundance>=1){
+				abundance=0;
+				continue;
+			}
+		
+			abundance+=abundanceRatio;
+
 			//compute the x and y that lies in the middle of the spanning tiles
 			float x=(imageContainer.startTile.x+imageContainer.endTile.x)/2;
 			float y=(imageContainer.startTile.y+imageContainer.endTile.y)/2;
