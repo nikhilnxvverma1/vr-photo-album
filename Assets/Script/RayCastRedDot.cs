@@ -4,14 +4,14 @@ using System.Collections;
 public class RayCastRedDot : MonoBehaviour {
 
 	public GameObject hoeveredObeject;
-	public GameObject door;
+//	public GameObject door;
 	public Camera camera;
 	public GameObject prefabRed;
 	private bool lookingAtPicture = false;
 	private GameObject picture;
 	// Use this for initialization
 	void Start () {
-		door = GameObject.FindWithTag("doors");
+//		door = GameObject.FindWithTag("doors");
 //		Debug.Log(DataScan.currentAlbum.photoList[0].description);
 	}
 
@@ -39,7 +39,7 @@ public class RayCastRedDot : MonoBehaviour {
 					picture = hitObject;
 					var obj = picture.GetComponentInChildren<TextMesh> ();
 					var picInfo = hitObject.GetComponent<PictureInfo> ();
-					wrapme(obj,DataScan.rootModel.albumList[1].photoList[picInfo.pictureIndex].description);
+					wrapme(obj,DataScan.currentAlbum.photoList[picInfo.pictureIndex].description);
 				}
 			} else {
 				if (lookingAtPicture) {
