@@ -6,7 +6,7 @@ public class CreatePhotoPlane : MonoBehaviour
 
 	// Use this for initialization
 	public float planescale;
-	private static System.Random rng = new System.Random();
+	private static System.Random rng; 
 	private List<GameObject> _photos;
 	public List<GameObject> Photos
 	{
@@ -17,6 +17,7 @@ public class CreatePhotoPlane : MonoBehaviour
 
 	void Start()
 	{
+		rng = new System.Random();
 		//var slash = System.IO.Path.DirectorySeparatorChar;
 		//byte[] image = System.IO.File.ReadAllBytes(System.IO.Directory.GetCurrentDirectory() + string.Format(@"{0}Assets{1}Starsinthesky.jpg",slash,slash));
 		//Texture2D t2 = new Texture2D(3877, 2842);
