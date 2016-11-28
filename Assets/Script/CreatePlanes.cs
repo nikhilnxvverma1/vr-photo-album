@@ -61,7 +61,7 @@ public class CreatePlanes : MonoBehaviour
 				}
 				else
 				{
-					p.transform.Translate(0, -1 * Time.deltaTime / 3, 0);
+					p.transform.Translate(0, -1 * Time.deltaTime / 2, 0);
 				}
 			}
 			
