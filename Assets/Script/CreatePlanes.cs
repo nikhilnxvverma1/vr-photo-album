@@ -7,10 +7,13 @@ public class CreatePlanes : MonoBehaviour
 	// Use this for initialization
 	public float numPlanes, initialHeight, separation, planescale;
 	public bool hasMovement;
+	private static System.Random rng = new System.Random();
 	private List<GameObject> planes;
 	void Start()
 	{
 		planes = new List<GameObject>();
+		var curAlbum = DataScan.currentAlbum;
+		var photoList = ShufflePhotos(curAlbum.photoList);
 		for (int i = 0; i < numPlanes; i++)
 		{
 			GameObject plane = new GameObject();
@@ -18,8 +21,25 @@ public class CreatePlanes : MonoBehaviour
 			plane.transform.localPosition = new Vector3(0, initialHeight + i * separation, 0);
 			var curPlane = plane.AddComponent<CreatePhotoPlane>();
 			curPlane.planescale = planescale;
+			curPlane.curPlane = i;
+			curPlane.rng = rng;
+			curPlane.photoList = photoList;
 			planes.Add(plane);
 		}
+	}
+
+	public Photo[] ShufflePhotos(Photo[] list)
+	{
+		int n = list.Length;
+		while (n > 1)
+		{
+			n--;
+			int k = rng.Next(n + 1);
+			Photo t = list[k];
+			list[k] = list[n];
+			list[n] = t;
+		}
+		return list;
 	}
 
 	// Update is called once per frame
@@ -67,4 +87,6 @@ public class CreatePlanes : MonoBehaviour
 			
 		}
 	}
+
+
 }
