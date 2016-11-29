@@ -13,8 +13,8 @@ public class Tilemap : MonoBehaviour {
 	void Start () {
 //		ReadTileMapFile("Assets/Script/Generation/tilemap.csv");//relative to the project
 
-//		Album album=GenerateFictitiousAlbum(20);
-		Album album=DataScan.currentAlbum;
+		Album album=GenerateFictitiousAlbum(20);
+//		Album album=DataScan.currentAlbum;
 		double maxFrameWidth=TileLength*1.5;
 		double maxFrameHeight=TileLength;
 		ImageBank imageBank=new ImageBank(album,maxFrameWidth,maxFrameHeight);
