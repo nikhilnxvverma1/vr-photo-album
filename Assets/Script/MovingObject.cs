@@ -7,14 +7,14 @@ public class MovingObject : MonoBehaviour {
 	public float radius=17;
 	public float x, y, z;
 	// Use this for initialization
-	void Start () {
-		angle = 45;
+	void Start () {		
 	}
 
 	// Update is called once per frame
 	void Update () {
 		
 		angle += speed*Time.deltaTime; //if you want to switch direction, use -= instead of +=
+		//TODO this is 2d rotation, For 3d rotation you also have to consider z
 		x = Mathf.Cos(angle)*radius;
 		y = Mathf.Sin(angle)*radius;
 		transform.position = new Vector3(x,y,z);
