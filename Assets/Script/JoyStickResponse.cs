@@ -5,9 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class JoyStickResponse : MonoBehaviour {
 
+	public GameObject menu;
 	// Use this for initialization
 	void Start () {
-	
+		Instantiate (menu);
+		menu.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -18,6 +21,11 @@ public class JoyStickResponse : MonoBehaviour {
 			Debug.Log ("Back Button detected Taking to Tutorial Scene");
 			DataScan.currentAlbum = DataScan.rootModel.albumList [0];
 			SceneManager.LoadScene ("Tutorial");
-		} 		
+		} 
+		if((DataScan.OS == DataScan.OS_TYPE.WINDOWS && Input.GetKeyDown ("joystick button 1")) ||
+			(DataScan.OS == DataScan.OS_TYPE.MAC && Input.GetKeyDown ("joystick button 17"))){
+			Debug.Log ("Opening Menu");
+			menu.gameObject.SetActive (true);
+		}
 	}
 }
