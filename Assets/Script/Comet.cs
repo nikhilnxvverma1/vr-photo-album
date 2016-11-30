@@ -19,14 +19,17 @@ public class Comet : MonoBehaviour {
 		length = speed * Time.deltaTime;
 
 		if (x > 50) {
-			StartCoroutine(TestCoroutine());
+			
 			//System.Threading.Thread.Sleep(3000);
 			x = Random.Range(-20, 20);
 			y = Random.Range(10, 17);
 			z = Random.Range(-20, 20);
+			transform.position = new Vector3(x,y,z);
+			StartCoroutine(TestCoroutine());
 		}
 		x += length;
 		transform.position = new Vector3(x,y,z);
+
 	}
 	IEnumerator TestCoroutine()
 	{
