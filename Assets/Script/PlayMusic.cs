@@ -14,8 +14,10 @@ public class PlayMusic : MonoBehaviour {
 
 	void Start () {
 		Shuffle ();
-		if(audioSource == null)
-			audioSource = GetComponent<AudioSource>();
+		if (audioSource == null) {
+			audioSource = GetComponent<AudioSource> ();
+			audioSource.loop = false;
+		}
 
 	}
 	
