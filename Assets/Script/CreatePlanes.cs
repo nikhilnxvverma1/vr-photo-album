@@ -5,10 +5,11 @@ public class CreatePlanes : MonoBehaviour
 {
 
 	// Use this for initialization
-	public float numPlanes, initialHeight, separation, planescale;
+	public float numPlanes, initialHeight, separation, planescale, imageSize;
 	public bool hasMovement;
 	private static System.Random rng = new System.Random();
 	private List<GameObject> planes;
+	public int numPhotos;
 	void Start()
 	{
 		planes = new List<GameObject>();
@@ -23,7 +24,9 @@ public class CreatePlanes : MonoBehaviour
 			curPlane.planescale = planescale;
 			curPlane.curPlane = i;
 			curPlane.rng = rng;
+			curPlane.numPhotos = numPhotos;
 			curPlane.photoList = photoList;
+			curPlane.size = imageSize;
 			planes.Add(plane);
 		}
 	}
@@ -61,7 +64,7 @@ public class CreatePlanes : MonoBehaviour
 						{
 							done = true;
 						}
-						color.a -= 1/(separation/Time.deltaTime/2);
+						color.a -= 1 / (separation / Time.deltaTime / 2);
 						rend.material.color = color;
 					}
 					if (done)
@@ -74,17 +77,18 @@ public class CreatePlanes : MonoBehaviour
 							rend.material.color = color;
 						}
 						p.transform.Translate(0, numPlanes * separation - 1, 0);
+						cpp.ChangePhotos();
 					}
 
 
-					
+
 				}
 				else
 				{
 					p.transform.Translate(0, -1 * Time.deltaTime / 2, 0);
 				}
 			}
-			
+
 		}
 	}
 
