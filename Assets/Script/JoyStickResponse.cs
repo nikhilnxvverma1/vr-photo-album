@@ -26,8 +26,10 @@ public class JoyStickResponse : MonoBehaviour {
 		} 
 		if((DataScan.OS == DataScan.OS_TYPE.WINDOWS && Input.GetKeyDown ("joystick button 1")) ||
 			(DataScan.OS == DataScan.OS_TYPE.MAC && Input.GetKeyDown ("joystick button 17"))){
-			Debug.Log ("Opening Menu");
-			menu.gameObject.SetActive (true);
+			if (menu!=null) {
+				Debug.Log ("Opening Menu");
+				menu.gameObject.SetActive (true);
+			}
 		}
 	}
 }
