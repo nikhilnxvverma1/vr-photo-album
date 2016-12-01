@@ -8,8 +8,10 @@ public class JoyStickResponse : MonoBehaviour {
 	public GameObject menu;
 	// Use this for initialization
 	void Start () {
-		Instantiate (menu);
-		menu.SetActive(false);
+		if (menu != null) {
+			Instantiate (menu);
+			menu.SetActive (false);
+		}
 
 	}
 	
