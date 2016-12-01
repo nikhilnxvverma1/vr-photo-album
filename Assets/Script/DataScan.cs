@@ -6,6 +6,7 @@ using System.IO;
 public class DataScan : MonoBehaviour {
 
 	private string rootFolder = "Assets/Images/Data Images";
+	private string musicFolder = "Assets/Resources";
 	public static RootModel rootModel;
 	public static Album currentAlbum;
 	public static OS_TYPE OS;
@@ -13,6 +14,7 @@ public class DataScan : MonoBehaviour {
 	private int width = 320;				// width and height for slideshow sprites
 	private int height = 240;
 	public int index;
+	public static List<string> musicList = new List<string> ();
 
 	private void LoadSprites(Album album){
 		var slides = new Sprite[album.photoList.Length];
@@ -50,8 +52,21 @@ public class DataScan : MonoBehaviour {
 			OS = OS_TYPE.WINDOWS;
 		else
 			OS = OS_TYPE.MAC;
+		loadMusic ();
         DontDestroyOnLoad(gameObject);
 //		printRootModel ();
+	}
+
+	private void loadMusic(){
+		musicList = new List<string> ();
+		DirectoryInfo dir = new DirectoryInfo(musicFolder);
+		Debug.Log (dir);
+		var info = dir.GetFiles("player_*.mp3");
+		Debug.Log (info.Length);
+		for (int i = 0; i < info.Length; i++) {
+			
+			musicList.Add(Path.GetFileNameWithoutExtension(info [i].Name));
+		}
 	}
 	public static void printRootModel(){
 		for (int i = 0; i < rootModel.albumList.Length; i++) {
