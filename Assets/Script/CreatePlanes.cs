@@ -56,30 +56,27 @@ public class CreatePlanes : MonoBehaviour
 				{
 					var cpp = p.GetComponent<CreatePhotoPlane>();
 					bool done = false;
-					foreach (GameObject photo in cpp.Photos)
-					{
-						var rend = photo.GetComponent<Renderer>();
-						var color = rend.material.color;
-						if (color.a <= 0)
-						{
-							done = true;
-						}
-						color.a -= 1 / (separation / Time.deltaTime / 2);
-						rend.material.color = color;
-					}
-					if (done)
-					{
-						foreach (GameObject photo in cpp.Photos)
-						{
-							var rend = photo.GetComponent<Renderer>();
+					if (cpp != null && cpp.Photos != null) {
+						foreach (GameObject photo in cpp.Photos) {
+							var rend = photo.GetComponent<Renderer> ();
 							var color = rend.material.color;
-							color.a = 1;
+							if (color.a <= 0) {
+								done = true;
+							}
+							color.a -= 1 / (separation / Time.deltaTime / 2);
 							rend.material.color = color;
 						}
-						p.transform.Translate(0, numPlanes * separation - 1, 0);
-						cpp.ChangePhotos();
+						if (done) {
+							foreach (GameObject photo in cpp.Photos) {
+								var rend = photo.GetComponent<Renderer> ();
+								var color = rend.material.color;
+								color.a = 1;
+								rend.material.color = color;
+							}
+							p.transform.Translate (0, numPlanes * separation - 1, 0);
+							cpp.ChangePhotos ();
+						}
 					}
-
 
 
 				}
