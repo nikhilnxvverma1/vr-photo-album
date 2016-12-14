@@ -33,3 +33,4 @@ sysinfo.txt
 
 #vs code configuration files
 /.vscode/launch.json
+*.gifcask
